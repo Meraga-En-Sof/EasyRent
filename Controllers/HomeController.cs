@@ -23,7 +23,34 @@ namespace EasyRent.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult Faq()
+        {
+            return View();
+        }
+
+
+        public IActionResult PropertyListing()
+        {
+            return View();
+        }
+
+        public IActionResult AgentListing()
+        {
+            return View();
+        }
+
+
+        public IActionResult Gallery()
+        {
+            return View();
+        }
+
+        public IActionResult ContactUs()
         {
             return View();
         }
