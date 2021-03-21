@@ -39,6 +39,10 @@ namespace EasyRent.Models
 
         public int Garage { get; set; }
 
+        public int Stairs { get; set; }
+
+        public string BuildingConditon { get; set; }
+
         [Display(Name="Floor Plan Link")]
         public string FloorPlanImage { get; set; }
 
