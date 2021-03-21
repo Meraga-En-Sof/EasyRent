@@ -1,0 +1,151 @@
+﻿@model EasyRent.Models.Property
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/AdminMenu.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Property</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GoogleMapAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GoogleMapAddress)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ImageName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Area)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Area)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BedRooms)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BedRooms)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.bathrooms)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.bathrooms)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Garage)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Garage)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Stairs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Stairs)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BuildingConditon)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BuildingConditon)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FloorPlanImage)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FloorPlanImage)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.isDealClosed)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.isDealClosed)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.isDisplayed)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.isDisplayed)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrencyId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrencyId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PropertyType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PropertyType.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PropertyMode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PropertyMode.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VideoLink)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VideoLink)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ClosedTo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ClosedTo.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

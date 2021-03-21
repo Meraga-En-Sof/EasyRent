@@ -23,7 +23,7 @@ namespace EasyRent.Models
         public string GoogleMapAddress { get; set; }
 
         [Display(Name = "Main Image Name")]
-        public string MainImageName { get; set; }
+        public string ImageName { get; set; }
 
         [Required]
         public double Price { get; set; }
@@ -53,6 +53,10 @@ namespace EasyRent.Models
 
         [NotMapped, Display(Name = "Upload File")]
         public IFormFile UploadedFile { get; set; }
+
+
+        public string Country { get; set; }
+
 
 
 

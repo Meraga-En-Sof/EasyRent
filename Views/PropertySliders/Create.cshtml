@@ -1,0 +1,35 @@
+﻿@model EasyRent.Models.PropertySlider
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/AdminMenu.cshtml";
+}
+
+<h2>Create</h2>
+
+<h4>PropertySlider</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ImageName" class="control-label"></label>
+                <input asp-for="ImageName" class="form-control" />
+                <span asp-validation-for="ImageName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PropertiesId" class="control-label"></label>
+                <select asp-for="PropertiesId" class ="form-control" asp-items="ViewBag.PropertiesId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
