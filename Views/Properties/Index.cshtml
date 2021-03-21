@@ -5,158 +5,170 @@
     Layout = "~/Views/Shared/AdminMenu.cshtml";
 }
 
-<h2>Index</h2>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <p>
+                        <a asp-action="Create">Create New</a>
+                    </p>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-striped">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GoogleMapAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Area)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BedRooms)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.bathrooms)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Garage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Stairs)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BuildingConditon)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FloorPlanImage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.isDealClosed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.isDisplayed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Country)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CurrencyId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PropertyType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PropertyMode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VideoLink)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClosedTo)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GoogleMapAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Area)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BedRooms)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.bathrooms)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Garage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stairs)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BuildingConditon)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FloorPlanImage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.isDealClosed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.isDisplayed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Country)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CurrencyId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PropertyType.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PropertyMode.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VideoLink)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClosedTo.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Address)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.GoogleMapAddress)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ImageName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Price)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Description)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Area)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.BedRooms)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.bathrooms)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Garage)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Stairs)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.BuildingConditon)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.FloorPlanImage)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.isDealClosed)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.isDisplayed)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Country)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CurrencyId)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PropertyType)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PropertyMode)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.User)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.VideoLink)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ClosedTo)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Address)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.GoogleMapAddress)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ImageName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Price)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Area)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BedRooms)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.bathrooms)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Garage)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Stairs)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BuildingConditon)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FloorPlanImage)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.isDealClosed)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.isDisplayed)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Country)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CurrencyId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PropertyType.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PropertyMode.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.User.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.VideoLink)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ClosedTo.Id)
+                                    </td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

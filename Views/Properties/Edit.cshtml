@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -26,13 +26,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="GoogleMapAddress" class="control-label"></label>
-                <a href="https://www.embed-map.com/" class="form-control">Get embedable info</a>
+                <a href="https://www.embed-map.com/" target="_blank" class="form-control" >Get embedable info</a>
                 <input asp-for="GoogleMapAddress" class="form-control" />
                 <span asp-validation-for="GoogleMapAddress" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ImageName" class="control-label"></label>
-                <input asp-for="ImageName" class="form-control" />
+                <input asp-for="UploadedFile" type="file" class="form-control-file" />
                 <span asp-validation-for="ImageName" class="text-danger"></span>
             </div>
             <div class="form-group">

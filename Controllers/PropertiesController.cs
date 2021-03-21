@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EasyRent.Data;
 using EasyRent.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using EasyRent.Constants;
 
 namespace EasyRent.Controllers
 {
     public class PropertiesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IHostingEnvironment _env;
 
-        public PropertiesController(ApplicationDbContext context)
+        public PropertiesController(IHostingEnvironment env, ApplicationDbContext context)
         {
             _context = context;
+            _env = env;
         }
 
         // GET: Properties
@@ -51,10 +56,10 @@ namespace EasyRent.Controllers
         // GET: Properties/Create
         public IActionResult Create()
         {
-            ViewData["ClosedToId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["ClosedToId"] = new SelectList(_context.Users, "Id", "UserName");
             ViewData["PropertyModeId"] = new SelectList(_context.propertyModes, "Id", "Name");
             ViewData["PropertyTypeId"] = new SelectList(_context.PropertyTypes, "Id", "Name");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName");
             return View();
         }
 
@@ -63,10 +68,44 @@ namespace EasyRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Address,GoogleMapAddress,ImageName,Price,Description,Area,BedRooms,bathrooms,Garage,Stairs,BuildingConditon,FloorPlanImage,isDealClosed,isDisplayed,Country,CurrencyId,PropertyTypeId,PropertyModeId,UserId,VideoLink,ClosedToId")] Property @property)
+        public async Task<IActionResult> Create([Bind("Id,Name,Address,GoogleMapAddress,ImageName,Price,Description,Area,BedRooms,bathrooms,Garage,Stairs,BuildingConditon,FloorPlanImage,isDealClosed,isDisplayed,Country,CurrencyId,PropertyTypeId,PropertyModeId,UserId,VideoLink,ClosedToId,UploadedFile")] Property @property)
         {
             if (ModelState.IsValid)
             {
+                try
+                {
+                    var iscorrectformat = false;
+                    string uniqueName = null;
+                    string filePath = null;
+                    FileInfo fi = new FileInfo(@property.UploadedFile.FileName);
+
+                    var actualextension = fi.Extension;
+                    var imageextensions = FileFormat.GetSupportedImageTypeExtensionsList();
+                    foreach (var imageExtension in imageextensions)
+                    {
+                        if (imageExtension == actualextension)
+                        {
+                            iscorrectformat = true;
+                        }
+                    }
+                    if (iscorrectformat == false)
+                    {
+                        return View(@property);
+                    }
+
+                    if (@property.UploadedFile != null)
+                    {
+                        string uploadsFolder = Path.Combine(_env.WebRootPath, "Images");
+                        uniqueName = Guid.NewGuid().ToString() + "_" + @property.UploadedFile.FileName;
+                        filePath = Path.Combine(uploadsFolder, uniqueName);
+                        @property.UploadedFile.CopyTo(new FileStream(filePath, FileMode.Create));
+                        @property.ImageName = uniqueName;
+                    }
+                }
+                catch
+                {
+
+                }
                 _context.Add(@property);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -103,7 +142,7 @@ namespace EasyRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,GoogleMapAddress,ImageName,Price,Description,Area,BedRooms,bathrooms,Garage,Stairs,BuildingConditon,FloorPlanImage,isDealClosed,isDisplayed,Country,CurrencyId,PropertyTypeId,PropertyModeId,UserId,VideoLink,ClosedToId")] Property @property)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,GoogleMapAddress,ImageName,Price,Description,Area,BedRooms,bathrooms,Garage,Stairs,BuildingConditon,FloorPlanImage,isDealClosed,isDisplayed,Country,CurrencyId,PropertyTypeId,PropertyModeId,UserId,VideoLink,ClosedToId,UploadedFile")] Property @property)
         {
             if (id != @property.Id)
             {
@@ -114,6 +153,43 @@ namespace EasyRent.Controllers
             {
                 try
                 {
+
+                    try
+                    {
+
+                        var iscorrectformat = false;
+                        string uniqueName = null;
+                        string filePath = null;
+                        FileInfo fi = new FileInfo(@property.UploadedFile.FileName);
+
+                        var actualextension = fi.Extension;
+                        var imageextensions = FileFormat.GetSupportedImageTypeExtensionsList();
+                        foreach (var imageExtension in imageextensions)
+                        {
+                            if (imageExtension == actualextension)
+                            {
+                                iscorrectformat = true;
+                            }
+                        }
+                        if (iscorrectformat == false)
+                        {
+                            return View(@property);
+                        }
+
+                        if (@property.UploadedFile != null)
+                        {
+                            string uploadsFolder = Path.Combine(_env.WebRootPath, "Images");
+                            uniqueName = Guid.NewGuid().ToString() + "_" + @property.UploadedFile.FileName;
+                            filePath = Path.Combine(uploadsFolder, uniqueName);
+                            @property.UploadedFile.CopyTo(new FileStream(filePath, FileMode.Create));
+                            @property.ImageName = uniqueName;
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+
                     _context.Update(@property);
                     await _context.SaveChangesAsync();
                 }

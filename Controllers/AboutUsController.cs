@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EasyRent.Data;
 using EasyRent.Models;
+using Microsoft.AspNetCore.Hosting;
 
 namespace EasyRent.Controllers
 {
     public class AboutUsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IHostingEnvironment _env;
 
-        public AboutUsController(ApplicationDbContext context)
+        public AboutUsController(IHostingEnvironment env, ApplicationDbContext context)
         {
             _context = context;
+            _env = env;
+
         }
 
         // GET: AboutUs
@@ -58,6 +62,7 @@ namespace EasyRent.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 _context.Add(aboutUs);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
