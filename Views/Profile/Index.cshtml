@@ -1,0 +1,362 @@
+﻿@model EasyRent.Models.User
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdminMenu.cshtml";
+}
+}
+@{
+    string last_name = "", first_name = "", language = "", quote = "", middle_name = "", about = "", address = "", phone_number = "", facebook = "", twitter = "", instagram = "", linkedId = "";
+    try
+    {
+        last_name = Model.LastName;
+    }
+    catch
+    {
+
+    }
+    try
+    {
+        first_name = Model.FirstName;
+    }
+    catch
+    {
+
+    }
+    try
+    {
+        middle_name = Model.MiddleName;
+    }
+    catch
+    {
+
+    }
+    try
+    {
+        about = Model.About;
+    }
+    catch
+    {
+
+    }
+    try
+    {
+        address = Model.Address;
+    }
+    catch
+    {
+
+    }
+    try
+    {
+        phone_number = Model.MobileNumber;
+    }
+    catch
+    {
+
+    }
+
+    try
+    {
+        facebook = Model.FacebookLink;
+    }
+    catch
+    {
+
+    }
+
+    try
+    {
+        twitter = Model.TwitterLink;
+    }
+    catch
+    {
+
+    }
+    try
+    {
+        linkedId = Model.LinkedInLink;
+    }
+    catch
+    {
+
+    }
+    try
+    {
+        instagram = Model.InstagramLink;
+    }
+    catch
+    {
+
+    }
+    try
+    {
+        language = Model.Language;
+    }
+    catch
+    {
+
+    }
+    try
+    {
+        quote = Model.Quote;
+    }
+    catch
+    {
+
+    }
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+
+            <!-- Profile Image -->
+            <div class="card card-primary card-outline">
+                <div class="card-body box-profile">
+                    <div class="text-center">
+                        @if (!string.IsNullOrEmpty(Model.ImageName))
+                        {
+                            <img class="profile-user-img img-fluid img-circle"
+                                 src="~/ProfilePicture/@Model.ImageName"
+                                 alt="User profile picture">
+                        }
+                        else
+                        {
+                            <img class="profile-user-img img-fluid img-circle"
+                                 src="~/ProfilePicture/generic-profile.jpg"
+                                 alt="User profile picture">
+                        }
+
+                    </div>
+
+                    <h3 class="profile-username text-center">@last_name @middle_name @first_name</h3>
+
+                    <p class="text-muted text-center">@Model.UserName      </p>
+
+                    <ul class="list-group list-group-unbordered mb-3">
+                        <li class="list-group-item">
+                            <b>Email</b> <a class="float-right">@Model.Email</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Phone No</b> <a class="float-right">@phone_number</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Facebook</b> <a href="@facebook" class="float-right">Link</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Twitter</b> <a href="@twitter" class="float-right">Link</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Instagram</b> <a href="@instagram" class="float-right">Link</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>LinkedIn</b> <a href="@linkedId" class="float-right">Link</a>
+                        </li>
+                    </ul>
+
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- About Me Box -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">About Me</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <strong><i class="fas fa-book mr-1"></i> Details</strong>
+
+                    <p class="text-muted">
+                        @about
+                    </p>
+
+                    <hr>
+
+                    <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+
+                    <p class="text-muted"> @address</p>
+
+                    <hr>
+
+                    <strong><i class="fas fa-pencil-alt mr-1"></i> Languages</strong>
+
+                    <p class="text-muted">
+                        @Model.Language
+                    </p>
+
+                    <hr>
+
+                    <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+
+                    <p class="text-muted">
+                        @Model.Skills
+                    </p>
+
+                    <hr>
+
+                    <strong><i class="far fa-file-alt mr-1"></i> Quotes</strong>
+
+                    <p class="text-muted">@Model.Quote</p>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        @if (ViewBag.IsUser == true)
+        {
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+
+
+                            <li class="nav-item"><a class="nav-link active" asp-area="Identity" asp-page="/Account/Manage/Index">Manage</a></li>
+                        </ul>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="tab-content">
+
+                            <!-- /.tab-pane -->
+
+                            <div class="tab-pane active" id="settings">
+                                <form asp-action="Create" class="form-horizontal" enctype="multipart/form-data">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <input type="hidden" asp-for="Id" />
+                                    <div class="form-group row">
+                                        <label for="inputName" class="col-sm-2 col-form-label">Last Name</label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="LastName" class="form-control" placeholder="Enter Last Name">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label for="inputName" class="col-sm-2 col-form-label">Middle Name</label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="MiddleName" class="form-control" placeholder="Enter Middle Name">
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group row">
+                                        <label for="inputName" class="col-sm-2 col-form-label">First Name</label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="FirstName" class="form-control" placeholder="Enter First Name">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="Email" readonly class="form-control" id="inputEmail" placeholder="Email">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputName2" class="col-sm-2 col-form-label">Username</label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="UserName" readonly class="form-control" id="inputName2" placeholder="Name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputName" class="col-sm-2 col-form-label">Address</label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="Address" class="form-control" placeholder="Enter Address">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputName" class="col-sm-2 col-form-label">Phone Number</label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="MobileNumber" class="form-control" placeholder="Enter Address">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputName" class="col-sm-2 col-form-label">Facebook</label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="FacebookLink" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputName" class="col-sm-2 col-form-label">Twitter</label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="TwitterLink" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputName" class="col-sm-2 col-form-label">Instagram</label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="InstagramLink" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputName" class="col-sm-2 col-form-label">LinkedIn</label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="LinkedInLink" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="UploadedFile" class="col-sm-2 col-form-label"></label>
+                                        <div class="col-sm-10">
+                                            <input asp-for="UploadedFile" type="file" class="form-control" />
+
+                                            <span asp-validation-for="UploadedFile" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputExperience" class="col-sm-2 col-form-label">About</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" asp-for="About" placeholder="About you"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" asp-for="Skills"
+                                                      rows="10"
+                                                      placeholder="Enter Skills"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputSkills" class="col-sm-2 col-form-label">Language</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" asp-for="Language"
+                                                      rows="10"
+                                                      placeholder="Enter the Language you speak"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="inputSkills" class="col-sm-2 col-form-label">Quote</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" asp-for="Quote"
+                                                      rows="10"
+                                                      placeholder="Enter your favorite quote"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="offset-sm-2 col-sm-10">
+                                            <button type="submit" class="btn btn-danger">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div><!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        }
+        <!-- /.col -->
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div><!-- /.container-fluid -->
