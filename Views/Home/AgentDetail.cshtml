@@ -1,0 +1,202 @@
+﻿@model EasyRent.ViewModels.AgentDetailViewModel
+@{
+    ViewData["Title"] = "AgentDetail";
+    Layout = "~/Views/HomeGeneral/Index.cshtml";
+}
+
+
+<!--========================================
+=            Section breadcrumb            =
+=========================================-->
+<div class="sub-banner">
+    <div class="overlay">
+        <div class="container">
+            <div class="breadcrumb-area">
+                <div class="top">
+                    <h4>Agent Profile</h4>
+                </div>
+                <ul class="breadcrumbs">
+                    <li><a href="@Url.Action("Index","Home")">Home</a></li>
+                    <li class="active">Agent Profile</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--====  End of Section breadcrumb  ====-->
+<!--=========================================
+    =            Section agent profile           =
+    ==========================================-->
+<div class="wrap-agent-profile-detail-two pdt80 pdbt80">
+    <div class="container">
+        <div class="row wow">
+            <div class="col-xs-12 col-sm-4 col-md-4 wow fadeInLeft delay-07s">
+                <div class="agent-img-two mb30">
+                    <img src="~/Images/@Model.Agent.ImageName" alt="image" class="img-responsive">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-4 wow fadeInRight delay-07s">
+                <div class="text-agent">
+                    <h2>
+                        Meet senior agent
+                    </h2>
+                </div>
+                <div class="agent-profile">
+                    <h3>
+                        @Model.Agent.LastName @Model.Agent.FirstName
+                    </h3>
+                    <span class="agent-profile-catagory">
+                        @Model.Agent.Quote
+                    </span>
+                </div>
+                <div class="profile-desc">
+                    <p>
+                        @Model.Agent.About
+                </div>
+                <div class="info">
+                    <a class="faa-parent animated-hover" href="#">
+                        <i class="fa fa-phone">
+                        </i>
+                        @Model.Agent.MobileNumber
+                    </a>
+                    <a class="faa-parent animated-hover" href="#">
+                        <i class="fa fa-envelope faa-passing">
+                        </i>
+                        @Model.Agent.Email
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4 col-sm-12 contract-left wow fadeInRight delay-07s">
+                <div class="text-agent">
+                    <h2>
+                        Contract Agent
+                    </h2>
+                </div>
+                <form asp-action="AgentDetail">
+                    <div class="form-group">
+                        <input asp-for="ContactAgent.Name" class="form-control input-lg" id="name" placeholder="name" type="text">
+
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="ContactAgent.Email" class="form-control input-lg" id="email" placeholder="Email" type="email">
+
+                    </div>
+                    <div class="form-group">
+                        <textarea asp-for="ContactAgent.Message" class="form-control" rows="6" placeholder="Massage">
+                            </textarea>
+                    </div>
+                    <button type="submit" class="btn button-md button-theme btn-lg" href="#">
+                        Contract Agent
+                        <i class="fa fa-long-arrow-right">
+                        </i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<!--Featured Property Ends-->
+<!--==============================================
+    =            Section recent property            =
+    ===============================================-->
+<div class="bg-default wrap-recent-property pdt40 pdbt80 wow fadeInUp delay-08s">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h3>Recent Property</h3>
+                <div class="recent-property owl-carousel owl-theme">
+
+                    @foreach (var item in Model.Recent)
+                    {
+                        <div class="item">
+                            <a href="properties-detail.html">
+                                <div class="listing-item compact">
+                                    <div class="listing-img-container">
+                                        <div class="listing-badges">
+                                            <span class="featured">
+                                                Featured
+                                            </span>
+                                            <span>
+                                                For @item.PropertyMode.Name
+                                            </span>
+                                        </div>
+                                        <div class="listing-img-content">
+                                            <span class="listing-compact-title">
+                                                Citra Garden Estate
+                                                <i>
+                                                    @{
+                                                        string ammount = "$" + item.Price + "  / monthly";
+                                                        if (item.PropertyModeId == 1)
+                                                        {
+                                                            ammount = "$" + item.Price;
+
+
+                                                        }
+                                                    }
+
+                                                    @ammount
+                                                </i>
+                                            </span>
+                                            <ul class="listing-hidden-content">
+                                                <li>
+                                                    Area
+                                                    <span>
+                                                        @item.Area sq ft
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    Bathrooms
+                                                    <span>
+                                                        @item.bathrooms
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    Bedrooms
+                                                    <span>
+                                                        @item.BedRooms;
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <img alt="" src="~/Images/@item.ImageName">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+
+<div class="bg-theme call-to-actions pdt40 pdbt40">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="text-call-us">
+                    <h3>
+                        Do you want rent or sell your property
+                    </h3>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="call-us text-right">
+                    <h3>
+                        Call Us +55 4XX-678-431
+                    </h3>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -79,12 +79,36 @@ namespace EasyRent.Controllers
 
         public IActionResult PropertyDetail(int Id)
         {
-            return View();
+            UserPropertyDetailViewModel userPropertyDetailViewModel = new UserPropertyDetailViewModel()
+            {
+                PopularProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed == true && m.isDisplayed == true),
+                Property = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.Id== Id).Include(m => m.User).FirstOrDefault(),
+                PropertyAmenities = db.PropertyAmenities.Include(m => m.Amenities).Include(m => m.Property).Where(m => m.Id == Id),
+                RecentProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Include(m => m.User).Where(m => m.isDisplayed==true).OrderByDescending(m => m.Id).Take(3),
+                PropertySliders = db.PropertySliders.Where(m => m.PropertiesId == Id),
+                MenuProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Include(m => m.User).OrderByDescending(m => m.Id).Take(10),
+                SocialMedia = db.SocialMedias.OrderByDescending(m => m.Id).FirstOrDefault()
+
+            };
+
+            userPropertyDetailViewModel.User = userPropertyDetailViewModel.Property.User;
+            return View(userPropertyDetailViewModel);
         }
 
-        public IActionResult AgentDetail(int Id)
+        public IActionResult AgentDetail(string Id)
         {
-            return View();
+
+            AgentDetailViewModel agentDetailViewModel = new AgentDetailViewModel()
+            {
+                Agent = db.Users.Where(m => m.Id == Id).FirstOrDefault(),
+                Properties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Include(m => m.User).Where(m => m.UserId == Id),
+                PropertyTypes = db.PropertyTypes,
+                Recent = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Include(m => m.User).OrderByDescending(m => m.Id).Take(3),
+                
+                MenuProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Include(m => m.User).OrderByDescending(m => m.Id).Take(10),
+                SocialMedia = db.SocialMedias.OrderByDescending(m => m.Id).FirstOrDefault()
+            };
+            return View(agentDetailViewModel);
         }
 
 
@@ -94,7 +118,7 @@ namespace EasyRent.Controllers
             {
                 Properties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType),
                 PropertyTypes = db.PropertyTypes,
-                MenuProperties = db.Properties.OrderByDescending(m => m.Id).Take(10),
+                MenuProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Take(10),
                 SocialMedia = db.SocialMedias.OrderByDescending(m => m.Id).FirstOrDefault()
             };
             return View(userGalleryViewModel);

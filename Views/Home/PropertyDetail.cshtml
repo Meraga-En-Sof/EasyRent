@@ -1,0 +1,608 @@
+﻿@model EasyRent.ViewModels.UserPropertyDetailViewModel
+@{
+    ViewData["Title"] = "PropertyDetail";
+    Layout = "~/Views/HomeGeneral/Index.cshtml";
+}
+
+<!--========================================
+=            Section breadcrumb            =
+=========================================-->
+<div class="sub-banner">
+    <div class="overlay">
+        <div class="container">
+            <div class="breadcrumb-area">
+                <div class="top">
+                    <h4>Properties Detail</h4>
+                </div>
+                <ul class="breadcrumbs">
+                    <li><a href=""@Url.Action("Index","Home")">Home</a></li>
+                    <li class="active">Properties Detail</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--====  End of Section breadcrumb  ====-->
+
+<div class="wrap-properties-detail pdt80 pdbt80">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-8">
+                <h3 class="property-title">
+                   @Model.Property.Name
+                    <small>
+                       @Model.Property.Address
+                    </small>
+                </h3>
+                <section>
+                    <div class="all">
+                        <div class="slider">
+                            <div class="owl-carousel owl-theme one">
+
+                                @foreach (var item in Model.PropertySliders)
+                                        {
+                                            string Websitename = "Localhost/3342";
+                                            var image_Link = Websitename + "/Images//" + item.ImageName;
+
+
+                                    <div class="item-box" style="background-image: url('@image_Link')">
+                                        <div class="content">
+                                            <div class="profile" style="background-image: url('@image_Link')">
+                                            </div>
+                                            <span>
+                                                @Model.User.LastName
+                                            </span>
+                                            <span>
+                                                @item.Properties.Name
+                                            </span>
+                                            <span>
+                                                @item.Properties.Address
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+
+
+                            </div>
+                            <div class="left nonl">
+                            </div>
+                            <div class="right">
+                            </div>
+                        </div>
+                        <div class="slider-two">
+                            <div class="owl-carousel owl-theme two">
+
+                                @foreach (var item in Model.PropertySliders)
+                                {
+                                    string Websitename = "Localhost/3342";
+                                    var image_Link = Websitename + "/Images//" + item.ImageName;
+                                    <div class="item active" style="background-image: url(@image_Link)">
+                                    </div>
+                                }
+
+                               
+                            </div>
+                            <div class="left-t nonl-t">
+                            </div>
+                            <div class="right-t">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <hr>
+                <!-- Start Tabs -->
+                <div class="tabbable" data-effect-in="flipInX">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab5">
+                                Specification
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#tab6">
+                                Description
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="tab5">
+                            <div>
+                                <h5>
+                                    <strong>
+                                        Property Information
+                                    </strong>
+                                </h5>
+                                <table class="table table-striped table-bordered standart-font">
+                                    <tbody>
+                                        <tr>
+                                            <th colspan="2" style="text-align: center;">
+                                                PROPERTY DETAILS
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 140px">
+                                                Owner
+                                            </th>
+                                            <td>
+                                                Yes
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Address
+                                            </th>
+                                            <td>
+                                                @Model.Property.Address
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Bedroom
+                                            </th>
+                                            <td>
+                                               @Model.Property.BedRooms
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Bathroom
+                                            </th>
+                                            <td>
+                                                @Model.Property.bathrooms
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Area
+                                            </th>
+                                            <td>
+                                                @Model.Property.Area m2
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Garage
+                                            </th>
+                                            <td>
+                                                @Model.Property.Garage
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Stairs
+                                            </th>
+                                            <td>
+                                                @Model.Property.Stairs
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>
+                                                 Building Condition
+                                            </th>
+                                            <td>
+                                                @Model.Property.BuildingConditon
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <h5 class="text-center">
+                                    <strong>
+                                        Amenities
+                                    </strong>
+                                </h5>
+                                <div class="lh fz14">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                            <ul class="list-inline">
+
+                                                @foreach (var item in Model.PropertyAmenities)
+                                                {
+                                                    <li class="col-xs-12 col-sm-4 col-md-4">
+                                                        <i class="fa fa-chevron-circle-right">
+                                                        </i>
+                                                        @item.Amenities.Name
+                                                    </li>
+                                                }
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade fz14 lh23" id="tab6">
+                            <h5>
+                                <strong>
+                                    Property Information
+                                </strong>
+                            </h5>
+                            <p>
+                                @Model.Property.Description
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <!-- End Tabs -->
+                <div class="property-video">
+                    <h4 class="property-video-title">
+                        Property Video
+                    </h4>
+                    <div class="property-video-content">
+                        <iframe height="400" width="900" src="@Model.Property.VideoLink" allowfullscreen="">
+                        </iframe>
+
+
+                    </div>
+                </div>
+                <h4>
+                    Top Property
+                </h4>
+                <div class="property-listing-block row paddt10">
+
+                    @foreach (var item in Model.PopularProperties)
+                    {
+                        <div class="item">
+                            <a href="@Url.Action("PropertyDetail","Home", new { Id = item.Id})" target="_blank">
+                                <div class="card">
+                                    <div class="card-image">
+                                        @if (item.isDealClosed == true)
+                                        {
+
+                                            <span class="ribbon">
+                                                SOLD OUT
+                                            </span>
+                                        }
+                                        <img alt="" class="img-responsive property-image" src="~/Images/@item.ImageName">
+                                        <span class="card-title">
+                                            @{
+                                                string ammount = "$" + item.Price + "  / monthly";
+                                                if (item.PropertyModeId == 1)
+                                                {
+                                                    ammount = "$" + item.Price;
+
+
+                                                }
+                                            }
+
+                                            @ammount
+
+                                        </span>
+                                        <span class="card-price">
+                                            For @item.PropertyMode.Name
+                                        </span>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="listingInfo">
+                                            <div class="vcard">
+                                                <span class="label label-success">
+                                                    @item.PropertyType.Name
+                                                </span>
+                                                <div class="title-properti">
+                                                    <h4>
+                                                        @item.Description
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-spec">
+                                        <div class="area" data-placement="top" data-toggle="tooltip" title="surface area">
+                                            <strong>
+                                                <i class="fa fa-map-o">
+                                                </i>
+                                            </strong>
+                                            <span class="text">
+                                                @item.Area M
+                                            </span>
+                                            <sup>
+                                                2
+                                            </sup>
+                                        </div>
+                                        <div class="area" data-placement="top" data-toggle="tooltip" title="building area">
+                                            <strong>
+                                                <i class="fa fa-parking">
+                                                </i>
+                                            </strong>
+                                            <span class="text">
+                                                @item.Garage Garage(s)
+                                            </span>
+
+                                        </div>
+                                        <div class="area" data-placement="top" data-toggle="tooltip" title="Bed Room">
+                                            <strong>
+                                                <i class="fa fa-bed">
+                                                </i>
+                                            </strong>
+                                            <span class="text">
+                                                @item.BedRooms Bedrooms
+                                            </span>
+
+                                        </div>
+                                        <div class="area" data-placement="top" data-toggle="tooltip" title="Bath Room">
+                                            <strong>
+                                                <i class="fa fa-shower">
+                                                </i>
+                                            </strong>
+                                            <span class="text">
+                                                @item.bathrooms Bathrooms
+                                            </span>
+                                            <sup>
+
+                                            </sup>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+            <!--==============================================
+            =            Section sidebar property            =
+            ===============================================-->
+
+            <div class="col-xs-12 col-sm-12 col-md-4">
+                <h4 class="property-title text-center wow fadeInDown delay-07s">
+                    Property
+                    <span>
+                        Agent
+                    </span>
+                </h4>
+                <div class="profile-agent hovercard wow fadeInDown delay-07s">
+                    <div class="cardheader">
+                    </div>
+                    <div class="avatar">
+                      
+                        <img alt="" src="~/Images/@Model.User.ImageName">
+
+                    </div>
+                    <h5>
+                        @Model.User.LastName @Model.User.FirstName
+                    </h5>
+                    <button class="btn button-md button-theme" data-target="#myModal" data-toggle="modal">
+                        <i class="fa fa-envelope fa-fw">
+                        </i>
+                        Send Message
+                    </button>
+                    <!-- Modal -->
+                    <div aria-labelledby="myModalLabel" class="modal fade" id="myModal" role="dialog" tabindex="-1">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                        <span aria-hidden="true">
+                                            ×
+                                        </span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">
+                                        Contact Agent
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-xs-3 col-sm-2 control-label">
+                                                Name
+                                            </label>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-user">
+                                                        </i>
+                                                    </div>
+                                                    <input class="form-control input-lg" placeholder="Name" type="text">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-3 col-sm-2 control-label">
+                                                Email
+                                            </label>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-envelope">
+                                                        </i>
+                                                    </div>
+                                                    <input class="form-control input-lg" placeholder="Email" type="email">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-3 col-sm-2 control-label">
+                                                Phone
+                                            </label>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-phone">
+                                                        </i>
+                                                    </div>
+                                                    <input class="form-control input-lg" placeholder="number" type="number">
+                                                </div>
+                                                <span class="help-block pull-left">
+                                                    Your data information will not be given from third party.
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-3 col-sm-2 control-label">
+                                                Send Message
+                                            </label>
+                                            <div class="col-xs-9 col-sm-10">
+                                                <textarea class="form-control" rows="5">
+                                    </textarea>
+                                            </div>
+                                        </div>
+                                        <div class="alert alert-info">
+                                            <strong>
+                                                Info!
+                                            </strong>
+                                            <span style="font-size:14px;">
+                                                When you contact the property agent / developer, do not forget to mention that you saw this listing on
+                                                <a class="copyright" href="#">
+                                                    <strong>
+                                                        Rent Easy
+                                                    </strong>
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn button-md button-theme" data-dismiss="modal" type="button">
+                                        Send Message
+                                    </button>
+                                    <button class="btn button-md button-theme" type="button">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="iklan-tayang mt10">
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-4 col-md-4 listing-tayang">
+                                <a href="#">
+                                    <strong>
+                                        25
+                                    </strong>
+                                    Property ads
+                                </a>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 sold-out">
+                                <a href="#">
+                                    <strong>
+                                        10
+                                    </strong>
+                                    Property  Sale
+                                </a>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 rent">
+                                <a href="#">
+                                    <strong>
+                                        15
+                                    </strong>
+                                    Property  Rent
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- sidebar filter search -->
+              
+                <!-- recent property -->
+                <div class="wrap-sidebar-property wow fadeInLeft delay-07s">
+                    <div class="panel-default">
+                        <div class="panel-heading">
+                            <h4>
+                                Recent
+                                <span>
+                                    Property
+                                </span>
+                            </h4>
+                        </div>
+                        @foreach (var item in Model.RecentProperties)
+                        {
+                            <div class="item">
+                                <a href=" @Url.Action("PropertyDetail", "Home", new { Id = item.Id })">
+                                    <div class="listing-item compact">
+                                        <div class="listing-img-container">
+                                            <div class="listing-badges">
+                                                <span class="featured">
+                                                    Featured
+                                                </span>
+                                                <span>
+                                                    @item.PropertyMode.Name
+                                                </span>
+                                            </div>
+                                            <div class="listing-img-content">
+                                                <span class="listing-compact-title">
+                                                    @item.Name
+                                                    <i>
+
+                                                        @{
+                                                            string ammount = "$" + item.Price + "  / monthly";
+                                                            if (item.PropertyModeId == 1)
+                                                            {
+                                                                ammount = "$" + item.Price;
+
+
+                                                            }
+                                                        }
+
+                                                        @ammount
+
+                                                    </i>
+                                                </span>
+                                                <ul class="listing-hidden-content">
+                                                    <li>
+                                                        Area
+                                                        <span>
+                                                            @item.Area sq ft
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        Garage
+                                                        <span>
+                                                            @item.Garage
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        Beds
+                                                        <span>
+                                                            @item.BedRooms
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        Baths
+                                                        <span>
+                                                            @item.bathrooms
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <img alt="" src="~/Images/@item.ImageName">
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="bg-theme call-to-actions pdt40 pdbt40">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="text-call-us">
+                    <h3>
+                        Do you want rent or sell your property
+                    </h3>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="call-us text-right">
+                    <h3>
+                        Call Us +55 4XX-678-431
+                    </h3>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
