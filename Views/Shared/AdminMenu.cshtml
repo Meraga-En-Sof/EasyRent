@@ -176,9 +176,8 @@
 
 
 
-
-
-
+                        @if (User.IsInRole("Admin"))
+                        {
                             <li class="nav-item">
                                 <a href="@Url.Action("Index", "AboutUs")" class="nav-link @about">
                                     <i class="nav-icon fa fa-info"></i>
@@ -189,9 +188,9 @@
                                 </a>
 
                             </li>
-                       
 
-                      
+
+
                             <li class="nav-item">
                                 <a href="@Url.Action("Index", "Amenities")" class="nav-link @home">
                                     <i class="nav-icon fa fa-info"></i>
@@ -202,9 +201,9 @@
                                 </a>
 
                             </li>
-                       
 
-                       
+
+
                             <li class="nav-item">
                                 <a href="@Url.Action("Index","User")" class="nav-link @users">
                                     <i class="nav-icon fa fa-users"></i>
@@ -215,12 +214,12 @@
                                 </a>
 
                             </li>
-                        
 
 
 
 
-                       
+
+
 
                             <li class="nav-item">
                                 <a href="@Url.Action("Index", "ContactUs")" class="nav-link @contact">
@@ -232,7 +231,7 @@
                                 </a>
 
                             </li>
-                        
+
 
 
 
@@ -247,7 +246,7 @@
                                 </a>
 
                             </li>
-                        
+
 
 
                             <li class="nav-item">
@@ -260,7 +259,7 @@
                                 </a>
 
                             </li>
-                       
+
                             <li class="nav-item">
                                 <a href="@Url.Action("Index", "ContactInformations")" class="nav-link @NewsCal">
                                     <i class="nav-icon fas fa-list-alt"></i>
@@ -271,7 +270,7 @@
                                 </a>
 
                             </li>
-                       
+
 
 
                             <li class="nav-item">
@@ -284,7 +283,7 @@
                                 </a>
 
                             </li>
-                       
+
                             <li class="nav-item">
                                 <a href="@Url.Action("Index", "PropertyAmenities")" class="nav-link @property_amenities">
                                     <i class="nav-icon fa fa-th-list"></i>
@@ -296,7 +295,7 @@
 
                             </li>
 
-                       
+
                             <li class="nav-item">
                                 <a href="@Url.Action("Index", "PropertyModes")" class="nav-link @property_modes">
                                     <i class="nav-icon fa fa-th-list"></i>
@@ -307,7 +306,7 @@
                                 </a>
 
                             </li>
-                       
+
                             <li class="nav-item">
                                 <a href="@Url.Action("Index", "PropertySliders")" class="nav-link @property_sliders">
                                     <i class="nav-icon fa fa-th-list"></i>
@@ -320,7 +319,7 @@
 
 
                             </li>
-                      
+
                             <li class="nav-item">
                                 <a href="@Url.Action("Index", "PropertyTypes")" class="nav-link @property_typesd">
                                     <i class="nav-icon fa fa-th-list"></i>
@@ -330,7 +329,7 @@
                                     </p>
                                 </a>
                             </li>
-                      
+
                             <li class="nav-item">
                                 <a href="@Url.Action("Index", "SocialMedias")" class="nav-link @social_media">
                                     <i class="nav-icon fa fa-link"></i>
@@ -341,23 +340,37 @@
                                 </a>
 
                             </li>
-                      
 
 
-                        <li class="nav-item">
-                            <a href="@Url.Action("Index","Testimonials")" class="nav-link @testimonial">
-                                <i class="nav-icon fa fa-child"></i>
-                                <p>
-                                    Testimonials
 
-                                </p>
-                            </a>
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index","Testimonials")" class="nav-link @testimonial">
+                                    <i class="nav-icon fa fa-child"></i>
+                                    <p>
+                                        Testimonials
 
-                        </li>
+                                    </p>
+                                </a>
+
+                            </li>
+                        }
+
+
 
 
                         @if (SignInManager.IsSignedIn(User))
                         {
+                            <li class="nav-item">
+                                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="nav-link @profile ">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>
+                                        Mange
+
+                                    </p>
+                                </a>
+
+                            </li>
+
                             <li class="nav-item">
                                 <a href="@Url.Action("Index","Profile")" class="nav-link @profile ">
                                     <i class="nav-icon fas fa-user"></i>
@@ -416,7 +429,7 @@
             <div class="float-right d-none d-sm-block">
                 <b>Date: </b> @DateTime.UtcNow
             </div>
-            <strong>Copyright &copy; 2018- @DateTime.UtcNow.Year <a href="#">Kigoo Properties</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; 2018- @DateTime.UtcNow.Year <a href="#">Rent Easy</a>.</strong> All rights reserved.
         </footer>
 
         <!-- Control Sidebar -->

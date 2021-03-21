@@ -45,7 +45,7 @@
                     {
                         <li>
 
-                            <a data-group="@item.Id" href="#">
+                            <a data-group="@item.Name" href="#">
                                 @item.Name
                             </a>
                         </li>
@@ -60,7 +60,7 @@
         <div class="row portfolio-items wow fadeInUp delay-08s" id="grid">
             @foreach (var item in Model.Properties)
             {
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" data-groups='["@item.PropertyTypeId", "all"]'>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" data-groups='["@item.PropertyType.Name", "all"]'>
                     <div class="portfolio-item">
                         <a data-caption="My caption" data-fancybox="images" href="~/assets/images/gallery.jpg">
                             <img alt="" src="~/Images/@item.ImageName">
