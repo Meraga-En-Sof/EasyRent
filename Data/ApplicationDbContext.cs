@@ -24,6 +24,8 @@ namespace EasyRent.Data
 
         public DbSet<Faq> Fag  { get; set; }
 
+        public DbSet<OurService> OurServices { get; set; }
+
         public DbSet<Property> Properties { get; set; }
 
         public DbSet<PropertyAmenities> PropertyAmenities { get; set; }

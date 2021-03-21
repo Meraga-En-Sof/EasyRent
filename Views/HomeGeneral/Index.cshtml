@@ -1,4 +1,4 @@
-﻿
+﻿@model EasyRent.ViewModels.UserGeneralViewModel
 @{
     ViewData["Title"] = "Index";
 }
@@ -71,15 +71,18 @@
                 <div class="col-xs-12 col-sm-12 col-md-6">
                     <div class="wrap-top-information">
                         <ul class="list-inline left">
-                            <li><a href="#"><i class="fa fa-phone"></i><span>Call us: 290 986 1386 </span></a></li>
-                            <li><a href="#"><i class="fa fa-home"></i><span>Email: support24-7@gmail.com </span></a></li>
+                            <li><a href="#"><i class="fa fa-phone"></i><span>Call us: @Model.SocialMedia.PhoneNumber </span></a></li>
+                            @{ 
+                                string mail = "mailto:" + Model.SocialMedia.Email;
+                            }
+                            <li><a href="@mail"><i class="fa fa-home"></i><span>Email: @Model.SocialMedia.Email </span></a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-6">
                     <div class="wrap-top-information">
                         <ul class="list-inline right">
-                            <li><a href="contact-us.html"><i class="fa fa-question-circle"></i><span>Have any questions </span></a></li>
+                            <li><a href="@Url.Action("ContactUs","Home")"><i class="fa fa-question-circle"></i><span>Have any questions </span></a></li>
                             <li><a asp-area="Identity" asp-page="/Account/Login"><span class="box-button">LOGIN OR REGISTER</span></a></li>
                         </ul>
                     </div>
@@ -112,41 +115,36 @@
                 <div class="social hidden-xs hidden-sm">
                     <ul>
                         <li>
-                            <a class="social-facebook" data-original-title="facebook" data-placement="bottom" data-toggle="tooltip" href="#" title="">
+                            <a class="social-facebook" data-original-title="facebook" data-placement="bottom" data-toggle="tooltip" href="@Model.SocialMedia.FacebookLink" title="">
                                 <i class="fa fa-facebook ">
                                 </i>
                             </a>
                         </li>
                         <li>
-                            <a class="social-twitter" data-original-title="twitter" data-placement="bottom" data-toggle="tooltip" href="#" title="">
+                            <a class="social-twitter" data-original-title="twitter" data-placement="bottom" data-toggle="tooltip" href="@Model.SocialMedia.TwitterLink" title="">
                                 <i class="fa fa-twitter">
                                 </i>
                             </a>
                         </li>
                         <li>
-                            <a class="social-google" data-original-title="google plus" data-placement="bottom" data-toggle="tooltip" href="#" title="">
-                                <i class="fa fa-google-plus">
+                            <a class="social-google" data-original-title="google plus" data-placement="bottom" data-toggle="tooltip" href="@Model.SocialMedia.LinkedInLink" title="">
+                                <i class="fa fa-linkedin">
                                 </i>
                             </a>
                         </li>
                         <li>
-                            <a class="social-youtobe" data-original-title="youtobe" data-placement="bottom" data-toggle="tooltip" href="#" title="">
+                            <a class="social-youtobe" data-original-title="youtobe" data-placement="bottom" data-toggle="tooltip" href="@Model.SocialMedia.GoogleAddress" title="">
                                 <i class="fa fa-youtube-play">
                                 </i>
                             </a>
                         </li>
                         <li>
-                            <a class="social-instagram" data-placement="bottom" data-toggle="tooltip" href="#" title="instagram">
+                            <a class="social-instagram" data-placement="bottom" data-toggle="tooltip" href="@Model.SocialMedia.InstagramLink" title="instagram">
                                 <i class="fa fa-instagram">
                                 </i>
                             </a>
                         </li>
-                        <li class="search">
-                            <a href="#">
-                                <i class="fa fa-search">
-                                </i>
-                            </a>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -198,186 +196,56 @@
                                         <h5 class="title">Popular Property</h5>
                                         <div class="content">
                                             <div class="nav-slider-property owl-carousel owl-theme">
-                                                <div class="item">
-                                                    <a href="/properties-detail.html">
-                                                        <div class="listing-item compact">
-                                                            <div class="listing-img-container">
-                                                                <div class="listing-badges">
-                                                                    <span class="featured">
-                                                                        Featured
-                                                                    </span>
-                                                                    <span>
-                                                                        For Sell
-                                                                    </span>
+                                                @foreach (var item in Model.MenuProperties)
+                                                {
+                                                    <div class="item">
+                                                        <a href="~/Images/@item.ImageName">
+                                                            <div class="listing-item compact">
+                                                                <div class="listing-img-container">
+                                                                    <div class="listing-badges">
+                                                                        <span class="featured">
+                                                                            Featured
+                                                                        </span>
+                                                                        <span>
+                                                                            @item.PropertyMode.Name
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="listing-img-content">
+                                                                        <span class="listing-compact-title">
+                                                                            @item.Name
+                                                                            <i>
+                                                                                $@item.Price / monthly
+                                                                            </i>
+                                                                        </span>
+                                                                        <ul class="listing-hidden-content">
+                                                                            <li>
+                                                                                Area
+                                                                                <span>
+                                                                                    @item.Area sq ft
+                                                                                </span>
+                                                                            </li>
+                                                                            <li>
+                                                                               Bathrooms
+                                                                                <span>
+                                                                                    @item.bathrooms
+                                                                                </span>
+                                                                            </li>
+                                                                            <li>
+                                                                                Bedrooms
+                                                                                <span>
+                                                                                    @item.BedRooms;
+                                                                                </span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <img alt="" src="~/Images/@item.ImageName">
                                                                 </div>
-                                                                <div class="listing-img-content">
-                                                                    <span class="listing-compact-title">
-                                                                        Malhathon Suites
-                                                                        <i>
-                                                                            $1300 / monthly
-                                                                        </i>
-                                                                    </span>
-                                                                    <ul class="listing-hidden-content">
-                                                                        <li>
-                                                                            Area
-                                                                            <span>
-                                                                                1450 sq ft
-                                                                            </span>
-                                                                        </li>
-                                                                        <li>
-                                                                            Rooms
-                                                                            <span>
-                                                                                3
-                                                                            </span>
-                                                                        </li>
-                                                                        <li>
-                                                                            Beds
-                                                                            <span>
-                                                                                2
-                                                                            </span>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                <img alt="" src="~/assets/images/home-1.jpg">
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="item">
-                                                    <a href="/properties-detail.html">
-                                                        <div class="listing-item compact">
-                                                            <div class="listing-img-container">
-                                                                <div class="listing-badges">
-                                                                    <span class="featured">
-                                                                        Featured
-                                                                    </span>
-                                                                    <span>
-                                                                        For Sell
-                                                                    </span>
-                                                                </div>
-                                                                <div class="listing-img-content">
-                                                                    <span class="listing-compact-title">
-                                                                        Citra Garden Estate
-                                                                        <i>
-                                                                            $1300 / monthly
-                                                                        </i>
-                                                                    </span>
-                                                                    <ul class="listing-hidden-content">
-                                                                        <li>
-                                                                            Area
-                                                                            <span>
-                                                                                1450 sq ft
-                                                                            </span>
-                                                                        </li>
-                                                                        <li>
-                                                                            Rooms
-                                                                            <span>
-                                                                                3
-                                                                            </span>
-                                                                        </li>
-                                                                        <li>
-                                                                            Beds
-                                                                            <span>
-                                                                                2
-                                                                            </span>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                <img alt="" src="~/assets/images/home-2.jpg">
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="item">
-                                                    <a href="/properties-detail.html">
-                                                        <div class="listing-item compact">
-                                                            <div class="listing-img-container">
-                                                                <div class="listing-badges">
-                                                                    <span class="featured">
-                                                                        Featured
-                                                                    </span>
-                                                                    <span>
-                                                                        For Sell
-                                                                    </span>
-                                                                </div>
-                                                                <div class="listing-img-content">
-                                                                    <span class="listing-compact-title">
-                                                                        2345 Allen Park
-                                                                        <i>
-                                                                            $1300 / monthly
-                                                                        </i>
-                                                                    </span>
-                                                                    <ul class="listing-hidden-content">
-                                                                        <li>
-                                                                            Area
-                                                                            <span>
-                                                                                1450 sq ft
-                                                                            </span>
-                                                                        </li>
-                                                                        <li>
-                                                                            Rooms
-                                                                            <span>
-                                                                                3
-                                                                            </span>
-                                                                        </li>
-                                                                        <li>
-                                                                            Beds
-                                                                            <span>
-                                                                                2
-                                                                            </span>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                <img alt="" src="~/assets/images/home-3.jpg">
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="item">
-                                                    <a href="#">
-                                                        <div class="listing-item compact">
-                                                            <div class="listing-img-container">
-                                                                <div class="listing-badges">
-                                                                    <span class="featured">
-                                                                        Featured
-                                                                    </span>
-                                                                    <span>
-                                                                        For Rent
-                                                                    </span>
-                                                                </div>
-                                                                <div class="listing-img-content">
-                                                                    <span class="listing-compact-title">
-                                                                        West Central Estate
-                                                                        <i>
-                                                                            $120 / monthly
-                                                                        </i>
-                                                                    </span>
-                                                                    <ul class="listing-hidden-content">
-                                                                        <li>
-                                                                            Area
-                                                                            <span>
-                                                                                1450 sq ft
-                                                                            </span>
-                                                                        </li>
-                                                                        <li>
-                                                                            Rooms
-                                                                            <span>
-                                                                                3
-                                                                            </span>
-                                                                        </li>
-                                                                        <li>
-                                                                            Beds
-                                                                            <span>
-                                                                                2
-                                                                            </span>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                <img alt="" src="~/assets/images/home-4.jpg">
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
+                                                        </a>
+                                                    </div>
+                                                }
+
+
                                             </div>
                                         </div>
                                     </div><!-- end col-9 -->
@@ -395,6 +263,11 @@
                     <li>
                         <a href="@Url.Action("Contact","Home")">
                             Contact us
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index","AboutUs")">
+                            Admin
                         </a>
                     </li>
                 </ul>
@@ -429,34 +302,30 @@
                         </h4>
                         <ul class="col-md-6 menu hide-bullets nopadding">
                             <li>
-                                <a href="#">
+                                <a href="@Url.Action("Index","Home")">
                                     Home
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="@Url.Action("Filter","Home", new { Id = 1})">
                                     Sell
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="@Url.Action("Filter","Home", new { Id = 2})">
                                     Rent
                                 </a>
                             </li>
+                          
                             <li>
-                                <a href="#">
-                                    Blog
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
+                                <a href="@Url.Action("ContactUs","Home")">
                                     Contact Us
                                 </a>
                             </li>
                         </ul>
                         <ul class="col-md-6 menu hide-bullets nopadding">
                             <li>
-                                <a href="#">
+                                <a href="@Url.Action("AboutUs","Home")">
                                     About Us
                                 </a>
                             </li>
@@ -505,7 +374,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12">
                         <div class="text-center">
-                            Copyright © 2021
+                            Copyright © @DateTime.UtcNow.Year
                             <strong>
                                 Rent Easy App
                             </strong>

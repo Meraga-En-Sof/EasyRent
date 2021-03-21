@@ -126,6 +126,30 @@ namespace EasyRent.Data.Migrations
                     b.ToTable("Fag");
                 });
 
+            modelBuilder.Entity("EasyRent.Models.OurService", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IconName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OurServices");
+                });
+
             modelBuilder.Entity("EasyRent.Models.Property", b =>
                 {
                     b.Property<int>("Id")
@@ -222,14 +246,15 @@ namespace EasyRent.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AmenitiesId")
+                        .HasColumnType("int");
 
                     b.Property<int>("PropertyId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AmenitiesId");
 
                     b.HasIndex("PropertyId");
 
@@ -633,11 +658,19 @@ namespace EasyRent.Data.Migrations
 
             modelBuilder.Entity("EasyRent.Models.PropertyAmenities", b =>
                 {
+                    b.HasOne("EasyRent.Models.Amenities", "Amenities")
+                        .WithMany()
+                        .HasForeignKey("AmenitiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("EasyRent.Models.Property", "Property")
                         .WithMany()
                         .HasForeignKey("PropertyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Amenities");
 
                     b.Navigation("Property");
                 });

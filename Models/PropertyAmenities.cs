@@ -11,15 +11,20 @@ namespace EasyRent.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+       
 
 
         //Relationships
 
         public Property Property { get; set; }
 
-        [Display(Name = "Property")]
+        [Display(Name = "Amenities")]
         public int PropertyId { get; set; }
+
+
+        public Amenities Amenities { get; set; }
+
+        [Display(Name = "Amenities")]
+        public int AmenitiesId { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace EasyRent.Controllers
         // GET: PropertyAmenities
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.PropertyAmenities.Include(p => p.Property);
+            var applicationDbContext = _context.PropertyAmenities.Include(p => p.Amenities).Include(p => p.Property);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -35,6 +35,7 @@ namespace EasyRent.Controllers
             }
 
             var propertyAmenities = await _context.PropertyAmenities
+                .Include(p => p.Amenities)
                 .Include(p => p.Property)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (propertyAmenities == null)
@@ -48,6 +49,7 @@ namespace EasyRent.Controllers
         // GET: PropertyAmenities/Create
         public IActionResult Create()
         {
+            ViewData["AmenitiesId"] = new SelectList(_context.Amenities, "Id", "Name");
             ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Address");
             return View();
         }
@@ -57,7 +59,7 @@ namespace EasyRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,PropertyId")] PropertyAmenities propertyAmenities)
+        public async Task<IActionResult> Create([Bind("Id,PropertyId,AmenitiesId")] PropertyAmenities propertyAmenities)
         {
             if (ModelState.IsValid)
             {
@@ -65,6 +67,7 @@ namespace EasyRent.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AmenitiesId"] = new SelectList(_context.Amenities, "Id", "Name", propertyAmenities.AmenitiesId);
             ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Address", propertyAmenities.PropertyId);
             return View(propertyAmenities);
         }
@@ -82,6 +85,7 @@ namespace EasyRent.Controllers
             {
                 return NotFound();
             }
+            ViewData["AmenitiesId"] = new SelectList(_context.Amenities, "Id", "Name", propertyAmenities.AmenitiesId);
             ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Address", propertyAmenities.PropertyId);
             return View(propertyAmenities);
         }
@@ -91,7 +95,7 @@ namespace EasyRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,PropertyId")] PropertyAmenities propertyAmenities)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,PropertyId,AmenitiesId")] PropertyAmenities propertyAmenities)
         {
             if (id != propertyAmenities.Id)
             {
@@ -118,6 +122,7 @@ namespace EasyRent.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AmenitiesId"] = new SelectList(_context.Amenities, "Id", "Name", propertyAmenities.AmenitiesId);
             ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Address", propertyAmenities.PropertyId);
             return View(propertyAmenities);
         }
@@ -131,6 +136,7 @@ namespace EasyRent.Controllers
             }
 
             var propertyAmenities = await _context.PropertyAmenities
+                .Include(p => p.Amenities)
                 .Include(p => p.Property)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (propertyAmenities == null)
