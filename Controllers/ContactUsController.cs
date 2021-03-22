@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EasyRent.Data;
+using EasyRent.Models;
+using Microsoft.AspNetCore.Authorization;
 
-namespace EasyRent.Models
+namespace EasyRent.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ContactUsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,12 +24,14 @@ namespace EasyRent.Models
         // GET: ContactUs
         public async Task<IActionResult> Index()
         {
+            ViewBag.NavigatedTO = "Contact";
             return View(await _context.ContactUs.ToListAsync());
         }
 
         // GET: ContactUs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.NavigatedTO = "Contact";
             if (id == null)
             {
                 return NotFound();
@@ -45,6 +50,7 @@ namespace EasyRent.Models
         // GET: ContactUs/Create
         public IActionResult Create()
         {
+            ViewBag.NavigatedTO = "Contact";
             return View();
         }
 
@@ -53,8 +59,9 @@ namespace EasyRent.Models
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,Website,message,isViewed")] ContactUs contactUs)
+        public async Task<IActionResult> Create([Bind("Id,Name,Email,message,isViewed")] ContactUs contactUs)
         {
+            ViewBag.NavigatedTO = "Contact";
             if (ModelState.IsValid)
             {
                 _context.Add(contactUs);
@@ -67,6 +74,7 @@ namespace EasyRent.Models
         // GET: ContactUs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.NavigatedTO = "Contact";
             if (id == null)
             {
                 return NotFound();
@@ -85,8 +93,9 @@ namespace EasyRent.Models
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Website,message,isViewed")] ContactUs contactUs)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,message,isViewed")] ContactUs contactUs)
         {
+            ViewBag.NavigatedTO = "Contact";
             if (id != contactUs.Id)
             {
                 return NotFound();
@@ -118,6 +127,7 @@ namespace EasyRent.Models
         // GET: ContactUs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewBag.NavigatedTO = "Contact";
             if (id == null)
             {
                 return NotFound();
@@ -138,6 +148,7 @@ namespace EasyRent.Models
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            ViewBag.NavigatedTO = "Contact";
             var contactUs = await _context.ContactUs.FindAsync(id);
             _context.ContactUs.Remove(contactUs);
             await _context.SaveChangesAsync();
@@ -146,6 +157,7 @@ namespace EasyRent.Models
 
         private bool ContactUsExists(int id)
         {
+            ViewBag.NavigatedTO = "Contact";
             return _context.ContactUs.Any(e => e.Id == id);
         }
     }

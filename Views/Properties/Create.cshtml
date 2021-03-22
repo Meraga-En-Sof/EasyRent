@@ -5,12 +5,13 @@
     Layout = "~/Views/Shared/AdminMenu.cshtml";
 }
 
-<h2>Create</h2>
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Add New Property</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
 
-<h4>Property</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -25,14 +26,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="GoogleMapAddress" class="control-label"></label>
-                <a href="https://www.embed-map.com/" target="_blank" class="form-control">Get embedable info</a>
-                <input asp-for="GoogleMapAddress" class="form-control" />
+                <a href="https://www.embed-map.com/" target="_blank" class="form-control">Get frame here</a>
+                <textarea asp-for="GoogleMapAddress" rows="10">
+                                   
+                                  </textarea>
                 <span asp-validation-for="GoogleMapAddress" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImageName" class="control-label"></label>
-                <input asp-for="UploadedFile" type="file"  class="form-control-file" />
-                <span asp-validation-for="ImageName" class="text-danger"></span>
+                <label asp-for="UploadedFile" class="control-label"></label>
+                <input asp-for="UploadedFile" type="file" class="form-control" />
+                <span asp-validation-for="UploadedFile" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
@@ -41,7 +44,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" id="summernote" rows="10">
+                                    Place <em>some</em> <u>text</u> <strong>here</strong>
+                                  </textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -65,73 +70,61 @@
                 <span asp-validation-for="Garage" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Stairs" class="control-label"></label>
-                <input asp-for="Stairs" class="form-control" />
-                <span asp-validation-for="Stairs" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BuildingConditon" class="control-label"></label>
-                <input asp-for="BuildingConditon" class="form-control" />
-                <span asp-validation-for="BuildingConditon" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="FloorPlanImage" class="control-label"></label>
                 <input asp-for="FloorPlanImage" class="form-control" />
                 <span asp-validation-for="FloorPlanImage" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="isDealClosed" /> @Html.DisplayNameFor(model => model.isDealClosed)
-                    </label>
+                <label asp-for="isDealClosed" class="control-label"></label>
+                <input asp-for="isDealClosed" class="form-check" />
+                <span asp-validation-for="isDealClosed" class="text-danger"></span>
+            </div>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="form-group">
+                    <label asp-for="isDisplayed" class="control-label"></label>
+                    <input asp-for="isDisplayed" class="form-check" />
+                    <span asp-validation-for="isDisplayed" class="text-danger"></span>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="isDisplayed" /> @Html.DisplayNameFor(model => model.isDisplayed)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="Country" class="control-label"></label>
-                <input asp-for="Country" class="form-control" />
-                <span asp-validation-for="Country" class="text-danger"></span>
-            </div>
+            }
+
             <div class="form-group">
                 <label asp-for="CurrencyId" class="control-label"></label>
-                <input asp-for="CurrencyId" class="form-control" />
-                <span asp-validation-for="CurrencyId" class="text-danger"></span>
+                <select asp-for="CurrencyId" class="form-control" asp-items="ViewBag.CurrencyId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="PropertyTypeId" class="control-label"></label>
-                <select asp-for="PropertyTypeId" class ="form-control" asp-items="ViewBag.PropertyTypeId"></select>
+                <select asp-for="PropertyTypeId" class="form-control" asp-items="ViewBag.PropertyTypeId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="PropertyModeId" class="control-label"></label>
-                <select asp-for="PropertyModeId" class ="form-control" asp-items="ViewBag.PropertyModeId"></select>
+                <select asp-for="PropertyModeId" class="form-control" asp-items="ViewBag.PropertyModeId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="VideoLink" class="control-label"></label>
+                <textarea asp-for="VideoLink" id="summernote2" rows="10">
+                                    Place <em>some</em> <u>text</u> <strong>here</strong>
+                                  </textarea>
                 <input asp-for="VideoLink" class="form-control" />
-                <span asp-validation-for="VideoLink" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="ClosedToId" class="control-label"></label>
-                <select asp-for="ClosedToId" class ="form-control" asp-items="ViewBag.ClosedToId"></select>
+                <select asp-for="ClosedToId" class="form-control" asp-items="ViewBag.ClosedToId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>

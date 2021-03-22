@@ -1,0 +1,61 @@
+﻿@model EasyRent.Models.Messages
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/HomeGeneral/Index.cshtml";
+}
+
+<h2>Create</h2>
+
+<h4>Messages</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject" class="control-label"></label>
+                <input asp-for="Subject" class="form-control" />
+                <span asp-validation-for="Subject" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AttachmentName" class="control-label"></label>
+                <input asp-for="AttachmentName" class="form-control" />
+                <span asp-validation-for="AttachmentName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateSent" class="control-label"></label>
+                <input asp-for="DateSent" class="form-control" />
+                <span asp-validation-for="DateSent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsImportant" /> @Html.DisplayNameFor(model => model.IsImportant)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="SenderId" class="control-label"></label>
+                <select asp-for="SenderId" class ="form-control" asp-items="ViewBag.SenderId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="RecieverId" class="control-label"></label>
+                <select asp-for="RecieverId" class ="form-control" asp-items="ViewBag.RecieverId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EasyRent.Data;
 using EasyRent.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EasyRent.Controllers
 {
+    [Authorize(Roles = "Admin, Team")]
     public class OurServicesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,12 +24,14 @@ namespace EasyRent.Controllers
         // GET: OurServices
         public async Task<IActionResult> Index()
         {
+            ViewBag.NavigatedTO = "Services";
             return View(await _context.OurServices.ToListAsync());
         }
 
         // GET: OurServices/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.NavigatedTO = "Services";
             if (id == null)
             {
                 return NotFound();
@@ -46,6 +50,7 @@ namespace EasyRent.Controllers
         // GET: OurServices/Create
         public IActionResult Create()
         {
+            ViewBag.NavigatedTO = "Services";
             return View();
         }
 
@@ -54,8 +59,9 @@ namespace EasyRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,IconName,Content")] OurService ourService)
+        public async Task<IActionResult> Create([Bind("Id,Name,IconImage,Content")] OurService ourService)
         {
+            ViewBag.NavigatedTO = "Services";
             if (ModelState.IsValid)
             {
                 _context.Add(ourService);
@@ -68,6 +74,7 @@ namespace EasyRent.Controllers
         // GET: OurServices/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.NavigatedTO = "Services";
             if (id == null)
             {
                 return NotFound();
@@ -86,8 +93,9 @@ namespace EasyRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,IconName,Content")] OurService ourService)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,IconImage,Content")] OurService ourService)
         {
+            ViewBag.NavigatedTO = "Services";
             if (id != ourService.Id)
             {
                 return NotFound();
@@ -119,6 +127,7 @@ namespace EasyRent.Controllers
         // GET: OurServices/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewBag.NavigatedTO = "Services";
             if (id == null)
             {
                 return NotFound();
@@ -139,6 +148,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            ViewBag.NavigatedTO = "Services";
             var ourService = await _context.OurServices.FindAsync(id);
             _context.OurServices.Remove(ourService);
             await _context.SaveChangesAsync();
@@ -147,6 +157,7 @@ namespace EasyRent.Controllers
 
         private bool OurServiceExists(int id)
         {
+            ViewBag.NavigatedTO = "Services";
             return _context.OurServices.Any(e => e.Id == id);
         }
     }

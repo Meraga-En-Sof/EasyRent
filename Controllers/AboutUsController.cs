@@ -8,30 +8,32 @@ using Microsoft.EntityFrameworkCore;
 using EasyRent.Data;
 using EasyRent.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EasyRent.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AboutUsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private IHostingEnvironment _env;
 
-        public AboutUsController(IHostingEnvironment env, ApplicationDbContext context)
+        public AboutUsController(ApplicationDbContext context)
         {
+            ViewBag.NavigatedTO = "About";
             _context = context;
-            _env = env;
-
         }
 
         // GET: AboutUs
         public async Task<IActionResult> Index()
         {
+            ViewBag.NavigatedTO = "About";
             return View(await _context.AboutUs.ToListAsync());
         }
 
         // GET: AboutUs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.NavigatedTO = "About";
             if (id == null)
             {
                 return NotFound();
@@ -50,6 +52,7 @@ namespace EasyRent.Controllers
         // GET: AboutUs/Create
         public IActionResult Create()
         {
+            ViewBag.NavigatedTO = "About";
             return View();
         }
 
@@ -60,9 +63,9 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,HeadTitle,Content")] AboutUs aboutUs)
         {
+            ViewBag.NavigatedTO = "About";
             if (ModelState.IsValid)
             {
-                
                 _context.Add(aboutUs);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -73,6 +76,7 @@ namespace EasyRent.Controllers
         // GET: AboutUs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.NavigatedTO = "About";
             if (id == null)
             {
                 return NotFound();
@@ -93,6 +97,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,HeadTitle,Content")] AboutUs aboutUs)
         {
+            ViewBag.NavigatedTO = "About";
             if (id != aboutUs.Id)
             {
                 return NotFound();
@@ -124,6 +129,7 @@ namespace EasyRent.Controllers
         // GET: AboutUs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewBag.NavigatedTO = "About";
             if (id == null)
             {
                 return NotFound();
@@ -144,6 +150,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            ViewBag.NavigatedTO = "About";
             var aboutUs = await _context.AboutUs.FindAsync(id);
             _context.AboutUs.Remove(aboutUs);
             await _context.SaveChangesAsync();
@@ -152,6 +159,7 @@ namespace EasyRent.Controllers
 
         private bool AboutUsExists(int id)
         {
+            ViewBag.NavigatedTO = "About";
             return _context.AboutUs.Any(e => e.Id == id);
         }
     }

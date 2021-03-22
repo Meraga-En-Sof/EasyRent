@@ -43,7 +43,7 @@
 
                                 @foreach (var item in Model.PropertySliders)
                                         {
-                                            string Websitename = "Localhost/3342";
+                                            string Websitename = "https://localhost:44386";
                                             var image_Link = Websitename + "/Images//" + item.ImageName;
 
 
@@ -76,9 +76,9 @@
 
                                 @foreach (var item in Model.PropertySliders)
                                 {
-                                    string Websitename = "Localhost/3342";
-                                    var image_Link = Websitename + "/Images//" + item.ImageName;
-                                    <div class="item active" style="background-image: url(@image_Link)">
+                                    string Websitename = "https://localhost:44386";
+                                    var image_Link = Websitename + "/Images/" + item.ImageName;
+                                    <div class="item active" style="background-image: url('@image_Link')">
                                     </div>
                                 }
 
@@ -360,8 +360,10 @@
                     <div class="cardheader">
                     </div>
                     <div class="avatar">
-                      
-                        <img alt="" src="~/Images/@Model.User.ImageName">
+                      @{ 
+                          string words = "~/Images/" + @Model.User.ImageName;
+                      }
+                        <img alt="" src="@words">
 
                     </div>
                     <h5>

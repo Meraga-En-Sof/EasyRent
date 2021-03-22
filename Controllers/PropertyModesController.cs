@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EasyRent.Data;
 using EasyRent.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EasyRent.Controllers
 {
+    [Authorize(Roles = "Admin, Team")]
     public class PropertyModesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,12 +24,14 @@ namespace EasyRent.Controllers
         // GET: PropertyModes
         public async Task<IActionResult> Index()
         {
+            ViewBag.NavigatedTO = "Rent";
             return View(await _context.propertyModes.ToListAsync());
         }
 
         // GET: PropertyModes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.NavigatedTO = "Rent";
             if (id == null)
             {
                 return NotFound();
@@ -46,6 +50,7 @@ namespace EasyRent.Controllers
         // GET: PropertyModes/Create
         public IActionResult Create()
         {
+            ViewBag.NavigatedTO = "Rent";
             return View();
         }
 
@@ -56,6 +61,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] PropertyMode propertyMode)
         {
+            ViewBag.NavigatedTO = "Rent";
             if (ModelState.IsValid)
             {
                 _context.Add(propertyMode);
@@ -68,6 +74,7 @@ namespace EasyRent.Controllers
         // GET: PropertyModes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.NavigatedTO = "Rent";
             if (id == null)
             {
                 return NotFound();
@@ -88,6 +95,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] PropertyMode propertyMode)
         {
+            ViewBag.NavigatedTO = "Rent";
             if (id != propertyMode.Id)
             {
                 return NotFound();
@@ -119,6 +127,7 @@ namespace EasyRent.Controllers
         // GET: PropertyModes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewBag.NavigatedTO = "Rent";
             if (id == null)
             {
                 return NotFound();
@@ -139,6 +148,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            ViewBag.NavigatedTO = "Rent";
             var propertyMode = await _context.propertyModes.FindAsync(id);
             _context.propertyModes.Remove(propertyMode);
             await _context.SaveChangesAsync();
@@ -147,6 +157,7 @@ namespace EasyRent.Controllers
 
         private bool PropertyModeExists(int id)
         {
+            ViewBag.NavigatedTO = "Rent";
             return _context.propertyModes.Any(e => e.Id == id);
         }
     }

@@ -18,7 +18,7 @@ namespace EasyRent.Models
 
         public Property Property { get; set; }
 
-        [Display(Name = "Amenities")]
+        [Display(Name = "Property")]
         public int PropertyId { get; set; }
 
 

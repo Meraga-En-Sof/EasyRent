@@ -1,0 +1,174 @@
+﻿@model EasyRent.ViewModels.MessageViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdminMenu.cshtml";
+    string RecieverId;
+
+}
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- DIRECT CHAT -->
+        <div class="card direct-chat direct-chat-warning">
+            <div class="card-header">
+                <h3 class="card-title">Direct Chat</h3>
+
+                @{
+                    int unread_messages = Model.AllMessages.Where(m => m.IsImportant == true).Count();
+                }
+                <div class="card-tools">
+                    <span title="3 New Messages" class="badge badge-warning">@unread_messages</span>
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
+                        <i class="fas fa-comments"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <!-- Conversations are loaded here -->
+                <div class="direct-chat-messages">
+                    <label style="color:maroon; position:center; font-size:smaller">(Plese note that Rent Easy will not be held responsible for any transaction performed here, please protect your private information)</label>
+
+                    @foreach (var item in Model.ActiveMessage)
+                    {
+                        if (item.SenderId == Model.ActiveUserId)
+                        {
+
+                            <!-- Message. Default to the left -->
+                            <div class="direct-chat-msg">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-left">@item.Sender.LastName @item.Sender.MiddleName @item.Sender.FirstName</span>
+                                    <span class="direct-chat-timestamp float-right">@item.DateSent.ToString("HH:mm dd-MMM-yyyy")</span>
+                                </div>
+                                <!-- /.direct-chat-infos -->
+                                @if (!String.IsNullOrEmpty(item.Sender.ImageName))
+                                {
+                                    <img class="direct-chat-img" src="~/ProfilePicture/@item.Sender.ImageName" height="128" width="128" alt="message user image">
+                                }
+                                else
+                                {
+                                    <img class="direct-chat-img" src="~/ProfilePicture/generic-profile.jpg" height="128" width="128" alt="message user image">
+                                }
+                                <!-- /.direct-chat-img -->
+                                <div class="direct-chat-text">
+                                    @item.Content
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            <!-- /.direct-chat-msg -->
+                        }
+                        else if (item.RecieverId == Model.ActiveUserId)
+                        {
+                            <!-- Message to the right -->
+                            <div class="direct-chat-msg right">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-right">@item.Reciever.LastName @item.Reciever.MiddleName @item.Reciever.FirstName</span>
+                                    <span class="direct-chat-timestamp float-left">@item.DateSent.ToString("HH:mm dd-MMM-yyyy")</span>
+                                </div>
+                                <!-- /.direct-chat-infos -->
+                                @if (!String.IsNullOrEmpty(item.Sender.ImageName))
+                                {
+                                    <img class="direct-chat-img" src="~/ProfilePicture/@item.Sender.ImageName" height="128" width="128" alt="message user image">
+                                }
+                                else
+                                {
+                                    <img class="direct-chat-img" src="~/ProfilePicture/generic-profile.jpg" height="128" width="128" alt="message user image">
+                                }
+                                <!-- /.direct-chat-img -->
+                                <div class="direct-chat-text">
+                                    @item.Content
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            <!-- /.direct-chat-msg -->
+                        }
+                    }
+
+
+                </div>
+                <!-- /.direct-chat-msg -->
+
+            </div>
+            <!--/.direct-chat-messages-->
+            <!-- Contacts are loaded here -->
+            <div class="direct-chat-contacts">
+                <ul class="contacts-list">
+                    @{
+                        var users = Model.AllMessages.Select(m => m.Reciever).Distinct();
+                    }
+                    @foreach (var item in users)
+                    {
+                        try
+                        {
+                            <li>
+                                <a href="@Url.Action("Index",new {Id = item.Id })">
+                                    @if (!String.IsNullOrEmpty(item.ImageName))
+                                    {
+                                        <img class="contacts-list-img" src="~/ProfilePicture/@item.ImageName" alt="User Avatar">
+                                    }
+                                    else
+                                    {
+                                        <img class="contacts-list-img" src="~/ProfilePicture/generic-profile.jpg" alt="User Avatar">
+                                    }
+
+
+                                    <div class="contacts-list-info">
+                                        <span class="contacts-list-name">
+                                            @item.LastName @item.MiddleName @item.FirstName
+                                            <small class="contacts-list-date float-right"></small>
+                                        </span>
+                                        <span class="contacts-list-msg"></span>
+                                    </div>
+                                    <!-- /.contacts-list-info -->
+                                </a>
+                            </li>
+                        }
+                        catch
+                        {
+
+                        }
+
+
+
+                    }
+
+
+                </ul>
+                <!-- /.contacts-list -->
+            </div>
+            <!-- /.direct-chat-pane -->
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <form asp-action="Creates">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="text" asp-for="Subject" placeholder="Enter Title." class="form-control col-12">
+                <div class="input-group">
+                    <input type="hidden" asp-for="ActiveUserId" class="form-control" />
+                    <input type="hidden" asp-for="RecieverId" class="form-control" />
+
+
+                    <textarea type="text" asp-for="Content" placeholder="Type Message ..." rows="20" class="form-control"></textarea>
+                    <span class="input-group-append">
+                        <button type="submit" class="btn btn-warning">Send</button>
+                    </span>
+
+                </div>
+            </form>
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!--/.direct-chat -->
+</div>
+<!-- /.col -->
+<!-- /.row -->

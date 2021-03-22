@@ -5,12 +5,12 @@
     Layout = "~/Views/Shared/AdminMenu.cshtml";
 }
 
-<h2>Edit</h2>
-
-<h4>PropertyAmenities</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Edit Property Amenity</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
@@ -29,9 +29,9 @@
             </div>
         </form>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 
+</div>

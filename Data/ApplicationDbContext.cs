@@ -41,9 +41,12 @@ namespace EasyRent.Data
 
         public DbSet<Testimonials> Testimonials { get; set; }
 
-        public DbSet<User> Users { get; set; }
 
         public DbSet<ContactAgent> ContactAgents { get; set; }
+
+        public DbSet<Messages> Messages { get; set; }
+
+        public DbSet<Payments> Payments { get; set; }
 
 
     }

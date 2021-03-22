@@ -1,0 +1,61 @@
+﻿@model EasyRent.Models.Messages
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/HomeGeneral/Index.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Messages</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AttachmentName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AttachmentName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateSent)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateSent)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsImportant)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsImportant)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sender)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sender.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Reciever)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Reciever.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

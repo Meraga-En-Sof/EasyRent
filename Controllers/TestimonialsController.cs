@@ -7,22 +7,38 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EasyRent.Data;
 using EasyRent.Models;
+using System.IO;
+using EasyRent.Constants;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 
 namespace EasyRent.Controllers
 {
+    [Authorize]
     public class TestimonialsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public TestimonialsController(ApplicationDbContext context)
+        private IHostingEnvironment _env;
+        public TestimonialsController(IHostingEnvironment env, ApplicationDbContext context)
         {
             _context = context;
+            _env = env;
         }
 
         // GET: Testimonials
         public async Task<IActionResult> Index()
         {
+
             var applicationDbContext = _context.Testimonials.Include(t => t.User);
+
+            if (!User.IsInRole("Admin"))
+            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                var applicationDbContextx = _context.Testimonials.Include(t => t.User).Where(m => m.UserId.Equals(userId));
+                return View(await applicationDbContextx.ToListAsync());
+            }
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -48,7 +64,7 @@ namespace EasyRent.Controllers
         // GET: Testimonials/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName");
             return View();
         }
 
@@ -57,15 +73,53 @@ namespace EasyRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Testimony,ImageName,UserId,isApproved")] Testimonials testimonials)
+        public async Task<IActionResult> Create([Bind("Id,Testimony,UserId,isApproved,UploadedFile")] Testimonials testimonials)
         {
             if (ModelState.IsValid)
             {
+
+
+
+
+                try
+                {
+                    var iscorrectformat = false;
+                    string uniqueName = null;
+                    string filePath = null;
+                    FileInfo fi = new FileInfo(testimonials.UploadedFile.FileName);
+
+                    var actualextension = fi.Extension;
+                    var imageextensions = FileFormat.GetSupportedImageTypeExtensionsList();
+                    foreach (var imageExtension in imageextensions)
+                    {
+                        if (imageExtension == actualextension)
+                        {
+                            iscorrectformat = true;
+                        }
+                    }
+                    if (iscorrectformat == false)
+                    {
+                        return View(testimonials);
+                    }
+
+                    if (testimonials.UploadedFile != null)
+                    {
+                        string uploadsFolder = Path.Combine(_env.WebRootPath, "TestimonialImage");
+                        uniqueName = Guid.NewGuid().ToString() + "_" + testimonials.UploadedFile.FileName;
+                        filePath = Path.Combine(uploadsFolder, uniqueName);
+                        testimonials.UploadedFile.CopyTo(new FileStream(filePath, FileMode.Create));
+                        testimonials.ImageName = uniqueName;
+                    }
+                }
+                catch
+                {
+                    return View(testimonials);
+                }
                 _context.Add(testimonials);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", testimonials.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", testimonials.UserId);
             return View(testimonials);
         }
 
@@ -82,7 +136,7 @@ namespace EasyRent.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", testimonials.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", testimonials.UserId);
             return View(testimonials);
         }
 
@@ -91,7 +145,7 @@ namespace EasyRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Testimony,ImageName,UserId,isApproved")] Testimonials testimonials)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Testimony,UserId,isApproved,UploadedFile")] Testimonials testimonials)
         {
             if (id != testimonials.Id)
             {
@@ -102,6 +156,43 @@ namespace EasyRent.Controllers
             {
                 try
                 {
+
+
+
+                    try
+                    {
+                        var iscorrectformat = false;
+                        string uniqueName = null;
+                        string filePath = null;
+                        FileInfo fi = new FileInfo(testimonials.UploadedFile.FileName);
+
+                        var actualextension = fi.Extension;
+                        var imageextensions = FileFormat.GetSupportedImageTypeExtensionsList();
+                        foreach (var imageExtension in imageextensions)
+                        {
+                            if (imageExtension == actualextension)
+                            {
+                                iscorrectformat = true;
+                            }
+                        }
+                        if (iscorrectformat == false)
+                        {
+                            return View(testimonials);
+                        }
+
+                        if (testimonials.UploadedFile != null)
+                        {
+                            string uploadsFolder = Path.Combine(_env.WebRootPath, "TestimonialImage");
+                            uniqueName = Guid.NewGuid().ToString() + "_" + testimonials.UploadedFile.FileName;
+                            filePath = Path.Combine(uploadsFolder, uniqueName);
+                            testimonials.UploadedFile.CopyTo(new FileStream(filePath, FileMode.Create));
+                            testimonials.ImageName = uniqueName;
+                        }
+                    }
+                    catch
+                    {
+                        return View(testimonials);
+                    }
                     _context.Update(testimonials);
                     await _context.SaveChangesAsync();
                 }
@@ -118,7 +209,7 @@ namespace EasyRent.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", testimonials.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", testimonials.UserId);
             return View(testimonials);
         }
 

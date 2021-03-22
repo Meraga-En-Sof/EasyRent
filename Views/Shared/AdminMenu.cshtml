@@ -4,7 +4,6 @@
     Layout = null;
 }
 @using Microsoft.AspNetCore.Identity
-
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 @{
@@ -42,10 +41,11 @@
     {
         about = "active";
     }
-    else if (content == "Users")
+    else if (content == "Users" || content == "Landlord" || content == "Tenants")
     {
         users = "active";
     }
+
     else if (content == "Contact")
     {
         contact = "active";
@@ -103,7 +103,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Rent Easy Dahboard</title>
+    <title>Easy Rent</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -149,8 +149,8 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="@Url.Action("Index","Home")" class="brand-link">
-                <img src="~/assets/images/clemira-logo.png" alt="Kigoo Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <a href="../../index3.html" class="brand-link">
+                <img src="~/Images/clemira-logo.png" alt="EasyRent Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">Rent Easy</span>
             </a>
 
@@ -174,6 +174,30 @@
     with font-awesome or any other icon font library -->
 
 
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Dashboard")" class="nav-link @home">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Dashboard
+
+                                </p>
+                            </a>
+
+                        </li>
+
+
+
+
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Messages")" class="nav-link @message">
+                                <i class="nav-icon fa fa-comment"></i>
+                                <p>
+                                    Message
+
+                                </p>
+                            </a>
+
+                        </li>
 
 
                         @if (User.IsInRole("Admin"))
@@ -188,22 +212,50 @@
                                 </a>
 
                             </li>
+                        }
 
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index", "Payments")" class="nav-link @about">
+                                <i class="nav-icon fa fa-info"></i>
+                                <p>
+                                    Payments
 
+                                </p>
+                            </a>
 
+                        </li>
+
+                        @if (User.IsInRole("Admin") || User.IsInRole("Agent"))
+                        {
                             <li class="nav-item">
-                                <a href="@Url.Action("Index", "Amenities")" class="nav-link @home">
-                                    <i class="nav-icon fa fa-info"></i>
+                                <a href="@Url.Action("Tenants","User")" class="nav-link @users">
+                                    <i class="nav-icon fa fa-users"></i>
                                     <p>
-                                        Amenities
+                                        Tenants
 
                                     </p>
                                 </a>
 
                             </li>
+                        }
 
 
+                        @if (User.IsInRole("Admin") || User.IsInRole("Tenant"))
+                        {
+                            <li class="nav-item">
+                                <a href="@Url.Action("Landlords","User")" class="nav-link @users">
+                                    <i class="nav-icon fa fa-users"></i>
+                                    <p>
+                                        Landlords
 
+                                    </p>
+                                </a>
+
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Admin") || User.IsInRole("Team"))
+                        {
                             <li class="nav-item">
                                 <a href="@Url.Action("Index","User")" class="nav-link @users">
                                     <i class="nav-icon fa fa-users"></i>
@@ -214,12 +266,13 @@
                                 </a>
 
                             </li>
+                        }
 
 
 
 
-
-
+                        @if (User.IsInRole("Admin"))
+                        {
 
                             <li class="nav-item">
                                 <a href="@Url.Action("Index", "ContactUs")" class="nav-link @contact">
@@ -231,11 +284,28 @@
                                 </a>
 
                             </li>
+                        }
+
+                        @if (User.IsInRole("Admin"))
+                        {
+
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "ContactInformations")" class="nav-link @contact">
+                                    <i class="nav-icon fa fa-location-arrow"></i>
+                                    <p>
+                                        Contact Us
+
+                                    </p>
+                                </a>
+
+                            </li>
+                        }
 
 
 
 
-
+                        @if (User.IsInRole("Admin") || User.IsInRole("Team"))
+                        {
                             <li class="nav-item">
                                 <a href="@Url.Action("Index", "OurServices")" class="nav-link @service">
                                     <i class="nav-icon fas fa-list-ol"></i>
@@ -246,31 +316,12 @@
                                 </a>
 
                             </li>
+                        }
 
 
 
-                            <li class="nav-item">
-                                <a href="@Url.Action("Index", "Faqs")" class="nav-link @News">
-                                    <i class="nav-icon fas fa-share-alt"></i>
-                                    <p>
-                                        Faqs
-
-                                    </p>
-                                </a>
-
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="@Url.Action("Index", "ContactInformations")" class="nav-link @NewsCal">
-                                    <i class="nav-icon fas fa-list-alt"></i>
-                                    <p>
-                                        Contact Information
-
-                                    </p>
-                                </a>
-
-                            </li>
-
+                        @if (User.IsInRole("Admin") || User.IsInRole("Team") || User.IsInRole("Agent"))
+                        {
 
 
                             <li class="nav-item">
@@ -283,7 +334,23 @@
                                 </a>
 
                             </li>
+                        }
+                        @if (User.IsInRole("Admin") || User.IsInRole("Team") || User.IsInRole("Agent"))
+                        {
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "Amenities")" class="nav-link @property_amenities">
+                                    <i class="nav-icon fa fa-th-list"></i>
+                                    <p>
+                                        Amenities
 
+                                    </p>
+                                </a>
+
+                            </li>
+
+                        }
+                        @if (User.IsInRole("Admin") || User.IsInRole("Team") || User.IsInRole("Agent"))
+                        {
                             <li class="nav-item">
                                 <a href="@Url.Action("Index", "PropertyAmenities")" class="nav-link @property_amenities">
                                     <i class="nav-icon fa fa-th-list"></i>
@@ -291,11 +358,14 @@
                                         Property Amenities
 
                                     </p>
-                                </a>F
+                                </a>
 
                             </li>
 
+                        }
 
+                        @if (User.IsInRole("Admin") || User.IsInRole("Team"))
+                        {
                             <li class="nav-item">
                                 <a href="@Url.Action("Index", "PropertyModes")" class="nav-link @property_modes">
                                     <i class="nav-icon fa fa-th-list"></i>
@@ -306,7 +376,10 @@
                                 </a>
 
                             </li>
+                        }
 
+                        @if (User.IsInRole("Admin") || User.IsInRole("Team") || User.IsInRole("Agent"))
+                        {
                             <li class="nav-item">
                                 <a href="@Url.Action("Index", "PropertySliders")" class="nav-link @property_sliders">
                                     <i class="nav-icon fa fa-th-list"></i>
@@ -319,7 +392,10 @@
 
 
                             </li>
+                        }
 
+                        @if (User.IsInRole("Admin") || User.IsInRole("Team"))
+                        {
                             <li class="nav-item">
                                 <a href="@Url.Action("Index", "PropertyTypes")" class="nav-link @property_typesd">
                                     <i class="nav-icon fa fa-th-list"></i>
@@ -329,7 +405,10 @@
                                     </p>
                                 </a>
                             </li>
+                        }
 
+                        @if (User.IsInRole("Admin"))
+                        {
                             <li class="nav-item">
                                 <a href="@Url.Action("Index", "SocialMedias")" class="nav-link @social_media">
                                     <i class="nav-icon fa fa-link"></i>
@@ -340,37 +419,23 @@
                                 </a>
 
                             </li>
-
-
-
-                            <li class="nav-item">
-                                <a href="@Url.Action("Index","Testimonials")" class="nav-link @testimonial">
-                                    <i class="nav-icon fa fa-child"></i>
-                                    <p>
-                                        Testimonials
-
-                                    </p>
-                                </a>
-
-                            </li>
                         }
 
 
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Testimonials")" class="nav-link @testimonial">
+                                <i class="nav-icon fa fa-child"></i>
+                                <p>
+                                    Testimonials
+
+                                </p>
+                            </a>
+
+                        </li>
 
 
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <li class="nav-item">
-                                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="nav-link @profile ">
-                                    <i class="nav-icon fas fa-user"></i>
-                                    <p>
-                                        Mange
-
-                                    </p>
-                                </a>
-
-                            </li>
-
                             <li class="nav-item">
                                 <a href="@Url.Action("Index","Profile")" class="nav-link @profile ">
                                     <i class="nav-icon fas fa-user"></i>

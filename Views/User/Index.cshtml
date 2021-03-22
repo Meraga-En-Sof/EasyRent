@@ -1,0 +1,130 @@
+﻿@model IEnumerable<EasyRent.Models.User>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdminMenu.cshtml";
+}
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+<div class="card card-solid">
+    <div class="card-body pb-0">
+        <div class="row">
+
+            @foreach (var item in Model)
+            {
+
+
+                string last_name = "", first_name = "", middle_name = "", about = "", address = "", phone_number = "";
+                try
+                {
+                    last_name = item.LastName;
+                }
+                catch
+                {
+
+                }
+                try
+                {
+                    first_name = item.FirstName;
+                }
+                catch
+                {
+
+                }
+                try
+                {
+                    middle_name = item.MiddleName;
+                }
+                catch
+                {
+
+                }
+                try
+                {
+                    about = item.About;
+                }
+                catch
+                {
+
+                }
+                try
+                {
+                    address = item.Address;
+                }
+                catch
+                {
+
+                }
+                try
+                {
+                    phone_number = item.MobileNumber;
+                }
+                catch
+                {
+
+                }
+
+                <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+                    <div class="card bg-light d-flex flex-fill">
+                        <div class="card-header text-muted border-bottom-0">
+                            @item.UserName
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h2 class="lead"><b>@last_name @first_name</b></h2>
+                                    <p class="text-muted text-sm"><b>About: </b>@about ...</p>
+                                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: @address</li>
+                                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: @phone_number</li>
+                                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-mail-bulk"></i></span> Email #: @item.Email</li>
+                                    </ul>
+                                </div>
+                                <div class="col-5 text-center">
+                                    @if (!String.IsNullOrEmpty(item.ImageName))
+                                    {
+                                        <img src="~/Images/@item.ImageName" height="128" width="128" alt="user-avatar" class="img-circle img-fluid">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/ProfilePicture/generic-profile.jpg" height="128" width="128" alt="user-avatar" class="img-circle img-fluid">
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="text-right">
+                                @if (User.IsInRole("Admin"))
+                                {
+                                  
+                                    <a href="@Url.Action("Agent","User",new { Id = item.Id})" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-user"></i> Make Agent/Landlord
+                                    </a>
+
+                                  
+                                    <a href="@Url.Action("Blog","User",new { Id = item.Id})" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-user"></i> Make Tenant
+                                    </a>
+                                }
+
+
+
+                                <a href="@Url.Action("Index","Messages",new { Id = item.Id})" class="btn btn-sm bg-teal">
+                                    <i class="fas fa-comments"></i>
+                                </a>
+                                <a href="@Url.Action("Index","Profile",new { Id = item.Id})" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-user"></i> View Profile
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+    <!-- /.card-body -->
+    <!-- /.card-footer -->
+</div>
+

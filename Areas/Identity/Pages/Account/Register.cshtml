@@ -67,7 +67,7 @@
                                         </div>
                                         <div class="panel-body">
                                             <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                                               
+
 
                                                 <div class="form-group">
                                                     <label>
@@ -116,6 +116,19 @@
 
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <!-- single dropdown -->
+                                                    <select asp-for="Input.Role" class="chosen-select" data-placeholder="property type" id="property-type">
+                                                        <option value="1">
+                                                            LandLord
+                                                        </option>
+                                                        <option value="2">
+                                                            Tenant
+                                                        </option>
+
+
+                                                    </select>
                                                 </div>
                                                 <div class="alert alert-info">
                                                     <i class="fa fa-info-circle">

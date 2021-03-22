@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using EasyRent.Data;
 
 namespace EasyRent.Areas.Identity.Pages.Account
 {
@@ -24,17 +25,20 @@ namespace EasyRent.Areas.Identity.Pages.Account
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext db;
 
         public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            db = context;
         }
 
         [BindProperty]
@@ -50,6 +54,12 @@ namespace EasyRent.Areas.Identity.Pages.Account
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
+
+
+            [Required]
+           
+            [Display(Name = "Role")]
+            public int Role { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -88,6 +98,28 @@ namespace EasyRent.Areas.Identity.Pages.Account
                         pageHandler: null,
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
+                    string roleId = "";
+                    if (Input.Role == 1)
+                    {
+                        roleId = "002";
+                    }
+                    else if (Input.Role == 2)
+                    {
+                        roleId = "003";
+                    }
+
+
+
+                    IdentityUserRole<string> identityRole = new IdentityUserRole<string>()
+                    {
+                        RoleId = roleId,
+                        UserId = user.Id
+                        
+                    };
+
+                    db.UserRoles.Add(identityRole);
+                    db.SaveChanges();
+
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

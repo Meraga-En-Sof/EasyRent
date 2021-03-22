@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EasyRent.Data;
 using EasyRent.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EasyRent.Controllers
 {
+    [Authorize(Roles = "Admin, Team")]
     public class PropertyTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -17,17 +19,20 @@ namespace EasyRent.Controllers
         public PropertyTypesController(ApplicationDbContext context)
         {
             _context = context;
+
         }
 
         // GET: PropertyTypes
         public async Task<IActionResult> Index()
         {
+            ViewBag.NavigatedTO = "Type";
             return View(await _context.PropertyTypes.ToListAsync());
         }
 
         // GET: PropertyTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.NavigatedTO = "Type";
             if (id == null)
             {
                 return NotFound();
@@ -46,6 +51,7 @@ namespace EasyRent.Controllers
         // GET: PropertyTypes/Create
         public IActionResult Create()
         {
+            ViewBag.NavigatedTO = "Type";
             return View();
         }
 
@@ -56,6 +62,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] PropertyType propertyType)
         {
+            ViewBag.NavigatedTO = "Type";
             if (ModelState.IsValid)
             {
                 _context.Add(propertyType);
@@ -68,6 +75,7 @@ namespace EasyRent.Controllers
         // GET: PropertyTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.NavigatedTO = "Type";
             if (id == null)
             {
                 return NotFound();
@@ -88,6 +96,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] PropertyType propertyType)
         {
+            ViewBag.NavigatedTO = "Type";
             if (id != propertyType.Id)
             {
                 return NotFound();
@@ -119,6 +128,7 @@ namespace EasyRent.Controllers
         // GET: PropertyTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewBag.NavigatedTO = "Type";
             if (id == null)
             {
                 return NotFound();
@@ -139,6 +149,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            ViewBag.NavigatedTO = "Type";
             var propertyType = await _context.PropertyTypes.FindAsync(id);
             _context.PropertyTypes.Remove(propertyType);
             await _context.SaveChangesAsync();
@@ -147,6 +158,7 @@ namespace EasyRent.Controllers
 
         private bool PropertyTypeExists(int id)
         {
+            ViewBag.NavigatedTO = "Type";
             return _context.PropertyTypes.Any(e => e.Id == id);
         }
     }

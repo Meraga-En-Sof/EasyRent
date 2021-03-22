@@ -54,7 +54,7 @@ namespace EasyRent.Controllers
             };
             var roles = db.UserRoles.Where(m => m.RoleId == "002").Select(m => m.UserId);
 
-            List<User> applicationUsers = new List<User>();
+            List<EasyRent.Models.User> applicationUsers = new List<EasyRent.Models.User>();
 
             foreach (var item in roles)
             {

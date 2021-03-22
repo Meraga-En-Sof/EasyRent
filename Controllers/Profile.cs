@@ -49,7 +49,7 @@ namespace EasyRent.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(User applicationUser)
+        public async Task<IActionResult> Create(EasyRent.Models.User applicationUser)
         {
             ViewBag.NavigatedTO = "Profile";
             var user = db.Users.Where(m => m.Id == applicationUser.Id).FirstOrDefault();

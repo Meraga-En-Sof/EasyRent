@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EasyRent.Data;
 using EasyRent.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EasyRent.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SocialMediasController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,12 +24,14 @@ namespace EasyRent.Controllers
         // GET: SocialMedias
         public async Task<IActionResult> Index()
         {
+            ViewBag.NavigatedTO = "SocialMedia";
             return View(await _context.SocialMedias.ToListAsync());
         }
 
         // GET: SocialMedias/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.NavigatedTO = "SocialMedia";
             if (id == null)
             {
                 return NotFound();
@@ -56,6 +60,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Email,Address,PhoneNumber,GoogleAddress,FacebookLink,TwitterLink,InstagramLink,LinkedInLink")] SocialMedia socialMedia)
         {
+            ViewBag.NavigatedTO = "SocialMedia";
             if (ModelState.IsValid)
             {
                 _context.Add(socialMedia);
@@ -68,6 +73,7 @@ namespace EasyRent.Controllers
         // GET: SocialMedias/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.NavigatedTO = "SocialMedia";
             if (id == null)
             {
                 return NotFound();
@@ -88,6 +94,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Address,PhoneNumber,GoogleAddress,FacebookLink,TwitterLink,InstagramLink,LinkedInLink")] SocialMedia socialMedia)
         {
+            ViewBag.NavigatedTO = "SocialMedia";
             if (id != socialMedia.Id)
             {
                 return NotFound();
@@ -119,6 +126,7 @@ namespace EasyRent.Controllers
         // GET: SocialMedias/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewBag.NavigatedTO = "SocialMedia";
             if (id == null)
             {
                 return NotFound();
@@ -139,6 +147,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            ViewBag.NavigatedTO = "SocialMedia";
             var socialMedia = await _context.SocialMedias.FindAsync(id);
             _context.SocialMedias.Remove(socialMedia);
             await _context.SaveChangesAsync();
@@ -147,6 +156,7 @@ namespace EasyRent.Controllers
 
         private bool SocialMediaExists(int id)
         {
+            ViewBag.NavigatedTO = "SocialMedia";
             return _context.SocialMedias.Any(e => e.Id == id);
         }
     }

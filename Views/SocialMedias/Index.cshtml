@@ -5,74 +5,90 @@
     Layout = "~/Views/Shared/AdminMenu.cshtml";
 }
 
-<h2>Index</h2>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <p>
+                        <a asp-action="Create">Create New</a>
+                    </p>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-striped">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GoogleAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FacebookLink)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TwitterLink)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InstagramLink)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LinkedInLink)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GoogleAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FacebookLink)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TwitterLink)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InstagramLink)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LinkedInLink)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Email)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Address)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.GoogleAddress)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.FacebookLink)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TwitterLink)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.InstagramLink)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.LinkedInLink)
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Address)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.GoogleAddress)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FacebookLink)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TwitterLink)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.InstagramLink)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LinkedInLink)
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
