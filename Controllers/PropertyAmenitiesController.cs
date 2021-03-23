@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using EasyRent.Data;
 using EasyRent.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace EasyRent.Controllers
 {
@@ -25,7 +26,15 @@ namespace EasyRent.Controllers
         public async Task<IActionResult> Index()
         {
             ViewBag.NavigatedTO = "Amenities";
-            var applicationDbContext = _context.PropertyAmenities.Include(p => p.Property);
+            if (!User.IsInRole("Index"))
+            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var applicationDbContextx = _context.PropertyAmenities.Include(p => p.Property).Include(m => m.Amenities).Where(m => m.Property.UserId == userId);
+                return View(await applicationDbContextx.ToListAsync());
+            }
+
+
+            var applicationDbContext = _context.PropertyAmenities.Include(p => p.Property).Include(m => m.Amenities);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -53,7 +62,8 @@ namespace EasyRent.Controllers
         public IActionResult Create()
         {
             ViewBag.NavigatedTO = "Amenities";
-            ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Address");
+            ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Name"); 
+            ViewData["AmenitiesId"] = new SelectList(_context.Amenities, "Id", "Name");
             return View();
         }
 
@@ -62,7 +72,7 @@ namespace EasyRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,PropertyId")] PropertyAmenities propertyAmenities)
+        public async Task<IActionResult> Create([Bind("Id,Name,PropertyId,AmenitiesId")] PropertyAmenities propertyAmenities)
         {
             ViewBag.NavigatedTO = "Amenities";
             if (ModelState.IsValid)
@@ -71,7 +81,8 @@ namespace EasyRent.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Address", propertyAmenities.PropertyId);
+            ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Name", propertyAmenities.PropertyId);
+            ViewData["AmenitiesId"] = new SelectList(_context.Amenities, "Id", "Name", propertyAmenities.AmenitiesId);
             return View(propertyAmenities);
         }
 
@@ -89,7 +100,8 @@ namespace EasyRent.Controllers
             {
                 return NotFound();
             }
-            ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Address", propertyAmenities.PropertyId);
+            ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Name", propertyAmenities.PropertyId);
+            ViewData["AmenitiesId"] = new SelectList(_context.Amenities, "Id", "Name", propertyAmenities.AmenitiesId);
             return View(propertyAmenities);
         }
 
@@ -98,7 +110,7 @@ namespace EasyRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,PropertyId")] PropertyAmenities propertyAmenities)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,PropertyId,AmenitiesId")] PropertyAmenities propertyAmenities)
         {
             ViewBag.NavigatedTO = "Amenities";
             if (id != propertyAmenities.Id)
@@ -126,7 +138,8 @@ namespace EasyRent.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Address", propertyAmenities.PropertyId);
+            ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Name", propertyAmenities.PropertyId);
+            ViewData["AmenitiesId"] = new SelectList(_context.Amenities, "Id", "Name", propertyAmenities.AmenitiesId);
             return View(propertyAmenities);
         }
 

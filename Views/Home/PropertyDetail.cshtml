@@ -15,7 +15,7 @@
                     <h4>Properties Detail</h4>
                 </div>
                 <ul class="breadcrumbs">
-                    <li><a href=""@Url.Action("Index","Home")">Home</a></li>
+                    <li><a href="@Url.Action("Index","Home")">Home</a></li>
                     <li class="active">Properties Detail</li>
                 </ul>
             </div>
@@ -208,7 +208,7 @@
                                                     </li>
                                                 }
 
-
+                                               
                                             </ul>
                                         </div>
                                     </div>
@@ -234,8 +234,8 @@
                         Property Video
                     </h4>
                     <div class="property-video-content">
-                        <iframe height="400" width="900" src="@Model.Property.VideoLink" allowfullscreen="">
-                        </iframe>
+                        @Html.Raw(Model.Property.VideoLink)
+                        
 
 
                     </div>
@@ -285,7 +285,7 @@
                                                 </span>
                                                 <div class="title-properti">
                                                     <h4>
-                                                        @item.Description
+                                                        @Html.Raw(item.Description)
                                                     </h4>
                                                 </div>
                                             </div>
@@ -361,7 +361,7 @@
                     </div>
                     <div class="avatar">
                       @{ 
-                          string words = "~/Images/" + @Model.User.ImageName;
+                          string words = "https://localhost:44386/Images/" + @Model.User.ImageName;
                       }
                         <img alt="" src="@words">
 
@@ -389,59 +389,20 @@
                                     </h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form class="form-horizontal">
-                                        <div class="form-group">
-                                            <label class="col-xs-3 col-sm-2 control-label">
-                                                Name
-                                            </label>
-                                            <div class="col-xs-9 col-sm-10">
-                                                <div class="input-group">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-user">
-                                                        </i>
-                                                    </div>
-                                                    <input class="form-control input-lg" placeholder="Name" type="text">
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-xs-3 col-sm-2 control-label">
-                                                Email
-                                            </label>
-                                            <div class="col-xs-9 col-sm-10">
-                                                <div class="input-group">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-envelope">
-                                                        </i>
-                                                    </div>
-                                                    <input class="form-control input-lg" placeholder="Email" type="email">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-xs-3 col-sm-2 control-label">
-                                                Phone
-                                            </label>
-                                            <div class="col-xs-9 col-sm-10">
-                                                <div class="input-group">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-phone">
-                                                        </i>
-                                                    </div>
-                                                    <input class="form-control input-lg" placeholder="number" type="number">
-                                                </div>
-                                                <span class="help-block pull-left">
-                                                    Your data information will not be given from third party.
-                                                </span>
-                                            </div>
-                                        </div>
+                                    <form asp-action="PropertyDetail" class="form-horizontal">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <input type="hidden" asp-for="Property.Id" />
+                                        <input type="hidden" asp-for="User.Id" />
                                         <div class="form-group">
                                             <label class="col-xs-3 col-sm-2 control-label">
                                                 Send Message
                                             </label>
                                             <div class="col-xs-9 col-sm-10">
-                                                <textarea class="form-control" rows="5">
+                                                <textarea asp-for="MessageForm" class="form-control" rows="5">
+
+
+
+
                                     </textarea>
                                             </div>
                                         </div>
@@ -450,7 +411,7 @@
                                                 Info!
                                             </strong>
                                             <span style="font-size:14px;">
-                                                When you contact the property agent / developer, do not forget to mention that you saw this listing on
+                                                You must be logged in to send a message on
                                                 <a class="copyright" href="#">
                                                     <strong>
                                                         Rent Easy
@@ -458,47 +419,19 @@
                                                 </a>
                                             </span>
                                         </div>
+                                        <div class="modal-footer">
+                                            <button class="btn button-md button-theme"  type="submit">
+                                                Send Message
+                                            </button>
+
+                                        </div>
                                     </form>
                                 </div>
-                                <div class="modal-footer">
-                                    <button class="btn button-md button-theme" data-dismiss="modal" type="button">
-                                        Send Message
-                                    </button>
-                                    <button class="btn button-md button-theme" type="button">
-                                        Cancel
-                                    </button>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
-                    <div class="iklan-tayang mt10">
-                        <div class="row">
-                            <div class="col-xs-4 col-sm-4 col-md-4 listing-tayang">
-                                <a href="#">
-                                    <strong>
-                                        25
-                                    </strong>
-                                    Property ads
-                                </a>
-                            </div>
-                            <div class="col-xs-4 col-sm-4 col-md-4 sold-out">
-                                <a href="#">
-                                    <strong>
-                                        10
-                                    </strong>
-                                    Property  Sale
-                                </a>
-                            </div>
-                            <div class="col-xs-4 col-sm-4 col-md-4 rent">
-                                <a href="#">
-                                    <strong>
-                                        15
-                                    </strong>
-                                    Property  Rent
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                
                 </div>
                 <!-- sidebar filter search -->
               

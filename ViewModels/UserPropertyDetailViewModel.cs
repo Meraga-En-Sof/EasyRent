@@ -20,5 +20,8 @@ namespace EasyRent.ViewModels
         public IEnumerable<Property> RecentProperties { get; set; }
 
         public IEnumerable<PropertySlider> PropertySliders { get; set; }
+
+
+        public string MessageForm { get; set; }
     }
 }

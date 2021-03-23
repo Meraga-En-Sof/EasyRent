@@ -1,6 +1,7 @@
 ﻿using EasyRent.Data;
 using EasyRent.Models;
 using EasyRent.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace EasyRent.Controllers
@@ -83,13 +85,50 @@ namespace EasyRent.Controllers
             {
                 PopularProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed == true && m.isDisplayed == true),
                 Property = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.Id== Id).Include(m => m.User).FirstOrDefault(),
-                PropertyAmenities = db.PropertyAmenities.Include(m => m.Amenities).Include(m => m.Property).Where(m => m.Id == Id),
+                PropertyAmenities = db.PropertyAmenities.Include(m => m.Amenities).Include(m => m.Property).Where(m => m.PropertyId == Id),
                 RecentProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Include(m => m.User).Where(m => m.isDisplayed==true).OrderByDescending(m => m.Id).Take(3),
                 PropertySliders = db.PropertySliders.Where(m => m.PropertiesId == Id),
                 MenuProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Include(m => m.User).OrderByDescending(m => m.Id).Take(10),
                 SocialMedia = db.SocialMedias.OrderByDescending(m => m.Id).FirstOrDefault()
 
             };
+
+            userPropertyDetailViewModel.User = userPropertyDetailViewModel.Property.User;
+            return View(userPropertyDetailViewModel);
+        }
+
+        [HttpPost, Authorize]
+        public IActionResult PropertyDetail(UserPropertyDetailViewModel userPropertyDetailViewModel)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            int Id = userPropertyDetailViewModel.Property.Id;
+
+            userPropertyDetailViewModel.PopularProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed == true && m.isDisplayed == true);
+            userPropertyDetailViewModel.Property = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.Id == Id).Include(m => m.User).FirstOrDefault();
+            userPropertyDetailViewModel.PropertyAmenities = db.PropertyAmenities.Include(m => m.Amenities).Include(m => m.Property).Where(m => m.PropertyId == Id);
+            userPropertyDetailViewModel.RecentProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Include(m => m.User)
+                .Where(m => m.isDisplayed == true).OrderByDescending(m => m.Id).Take(3);
+            userPropertyDetailViewModel.PropertySliders = db.PropertySliders.Where(m => m.PropertiesId == Id);
+            userPropertyDetailViewModel.MenuProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Include(m => m.User).OrderByDescending(m => m.Id).Take(10);
+            userPropertyDetailViewModel.SocialMedia = db.SocialMedias.OrderByDescending(m => m.Id).FirstOrDefault();
+
+            try
+            { 
+                Messages messages = new Messages()
+                {
+                    DateSent = DateTime.UtcNow,
+                    Content = userPropertyDetailViewModel.MessageForm,
+                    SenderId = userId,
+                    RecieverId = userPropertyDetailViewModel.User.Id
+                };
+                db.Messages.Add(messages);
+                db.SaveChanges();
+                return RedirectToAction("Index","Messages");
+            }
+            catch
+            {
+
+            }
 
             userPropertyDetailViewModel.User = userPropertyDetailViewModel.Property.User;
             return View(userPropertyDetailViewModel);
