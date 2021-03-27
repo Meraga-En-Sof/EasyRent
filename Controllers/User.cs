@@ -26,7 +26,8 @@ namespace EasyRent.Controllers
         public IActionResult Index()
             {
                 ViewBag.NavigatedTO = "Users";
-                var users = db.Users;
+
+                var users = db.Users.Where(m => m.Email != "Support01@EasyRent.com");
                 return View(users);
             }
 
@@ -34,92 +35,77 @@ namespace EasyRent.Controllers
         public IActionResult Landlords()
         {
             ViewBag.NavigatedTO = "Landlord";
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            List<EasyRent.Models.User> applicationUsers = new List<EasyRent.Models.User>();
-            var roles = db.Properties.Where(m=> m.UserId == userId);
 
-            foreach (var item in roles)
+            if (!User.IsInRole("Admin"))
             {
-                var user = db.Users.Where(m => m.Id == item.ClosedToId).FirstOrDefault();
-                applicationUsers.Add(user);
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                List<EasyRent.Models.User> applicationUsers = new List<EasyRent.Models.User>();
+                var roles = db.Properties.Where(m => m.UserId == userId);
+
+                foreach (var item in roles)
+                {
+                    var user = db.Users.Where(m => m.Id == item.ClosedToId).FirstOrDefault();
+                    applicationUsers.Add(user);
+                }
+
+
+
+
+                var users = applicationUsers;
+                return View(users);
             }
 
+            var userroles = db.UserRoles.Where(m => m.RoleId == "002");
 
+            List<EasyRent.Models.User> landlords = new List<Models.User>();
 
-            
-            var users = applicationUsers;
-            return View(users);
+            foreach (var item in userroles)
+            {
+                var user = db.Users.Where(m => m.Id == item.UserId).FirstOrDefault();
+                landlords.Add(user);
+            }
+            var all_landlords = landlords;
+            return View(all_landlords);
         }
 
         public IActionResult Tenants()
         {
             ViewBag.NavigatedTO = "Tenants";
 
-
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            List<EasyRent.Models.User> applicationUsers = new List<EasyRent.Models.User>();
-            var roles = db.Properties.Where(m => m.ClosedToId == userId);
-
-            foreach (var item in roles)
+            if (!User.IsInRole("Admin"))
             {
-                var user = db.Users.Where(m => m.Id == item.UserId).FirstOrDefault();
-                applicationUsers.Add(user);
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                List<EasyRent.Models.User> applicationUsers = new List<EasyRent.Models.User>();
+                var roles = db.Properties.Where(m => m.ClosedToId == userId);
+
+                foreach (var item in roles)
+                {
+                    var user = db.Users.Where(m => m.Id == item.UserId).FirstOrDefault();
+                    applicationUsers.Add(user);
+                }
+
+
+
+
+                var users = applicationUsers;
+                return View(users);
             }
 
+            var userroles = db.UserRoles.Where(m => m.RoleId == "003");
 
+            List<EasyRent.Models.User> tenants = new List<Models.User>();
 
-
-            var users = applicationUsers;
-            return View(users);
+            foreach (var item in userroles)
+            {
+                var user = db.Users.Where(m => m.Id == item.UserId).FirstOrDefault();
+                tenants.Add(user);
+            }
+            var all_tenants = tenants;
+            return View(all_tenants);
         }
 
 
-        public IActionResult Team(string Id)
-            {
-
-
-
-                var role = db.UserRoles.Where(m => m.UserId == Id).FirstOrDefault();
-                try
-                {
-                    if (role.RoleId == GetUserRoles.Admin)
-                    {
-
-                    }
-                    else if (role.RoleId == GetUserRoles.Team)
-                    {
-                        if (User.IsInRole("Admin"))
-                        {
-                            role.RoleId = GetUserRoles.Team;
-                            db.UserRoles.Update(role);
-                            db.SaveChanges();
-                        }
-                    }
-                    else
-                    {
-                        role.RoleId = GetUserRoles.Team;
-                        db.UserRoles.Update(role);
-                        db.SaveChanges();
-                    }
-
-                }
-                catch
-                {
-                    IdentityUserRole<string> userRoles = new IdentityUserRole<string>()
-                    {
-                        UserId = Id,
-                        RoleId = GetUserRoles.Team
-                    };
-
-
-
-                    db.UserRoles.Add(userRoles);
-                    db.SaveChanges();
-                }
-                ViewBag.NavigatedTO = "Users";
-                var users = db.Users;
-                return RedirectToAction("Index", users);
-            }
+      //Actions
 
 
             public IActionResult Delete(string Id)
@@ -134,7 +120,7 @@ namespace EasyRent.Controllers
                     {
 
                     }
-                    else if (role.RoleId == GetUserRoles.Team)
+                    else if (role.RoleId == "000")
                     {
                         if (User.IsInRole("Admin"))
                         {
@@ -159,7 +145,7 @@ namespace EasyRent.Controllers
                 return RedirectToAction("Index", users);
             }
 
-            public IActionResult Blog(string Id)
+            public IActionResult Tenant(string Id)
             {
 
                 var role = db.UserRoles.Where(m => m.UserId == Id).FirstOrDefault();
@@ -167,37 +153,34 @@ namespace EasyRent.Controllers
                 {
                     if (role.RoleId == GetUserRoles.Admin)
                     {
-
-                    }
-                    else if (role.RoleId == GetUserRoles.Team)
+                    ViewBag.NavigatedTO = "Tenants";
+                    var usersd = db.Users;
+                    return RedirectToAction("Index", usersd);
+                }
+                    else if (role.RoleId == GetUserRoles.Tenant)
                     {
-                        if (User.IsInRole("Admin"))
-                        {
-                            role.RoleId = GetUserRoles.Blog;
-                            db.UserRoles.Update(role);
-                            db.SaveChanges();
-                        }
+                       
                     }
                     else
                     {
-                        role.RoleId = GetUserRoles.Blog;
-                        db.UserRoles.Update(role);
-                        db.SaveChanges();
+                            IdentityUserRole<string> identityUserRole = new IdentityUserRole<string>()
+                            {
+                                UserId = role.UserId,
+                                RoleId = GetUserRoles.Tenant
+                            };
+
+
+                        
+                                db.UserRoles.Remove(role);
+                                db.SaveChanges();
+                            db.UserRoles.Add(identityUserRole);
+                            db.SaveChanges();
                     }
 
                 }
                 catch
                 {
-                    IdentityUserRole<string> userRoles = new IdentityUserRole<string>()
-                    {
-                        UserId = Id,
-                        RoleId = GetUserRoles.Blog
-                    };
-
-
-
-                    db.UserRoles.Add(userRoles);
-                    db.SaveChanges();
+                   
                 }
                 ViewBag.NavigatedTO = "Users";
                 var users = db.Users;
@@ -213,38 +196,35 @@ namespace EasyRent.Controllers
                 {
                     if (role.RoleId == GetUserRoles.Admin)
                     {
-
+                        ViewBag.NavigatedTO = "Landlords";
+                        var usersdd = db.Users;
+                        return RedirectToAction("Index", usersdd);
                     }
-                    else if (role.RoleId == GetUserRoles.Team)
+                    else if (role.RoleId == GetUserRoles.Admin)
                     {
-                        if (User.IsInRole("Admin"))
-                        {
-                            role.RoleId = GetUserRoles.Agent;
-                            db.UserRoles.Update(role);
-                            db.SaveChanges();
-                        }
+                       
                     }
                     else
                     {
-                        role.RoleId = GetUserRoles.Agent;
-                        db.UserRoles.Update(role);
-                        db.SaveChanges();
+                            IdentityUserRole<string> identityUserRole = new IdentityUserRole<string>()
+                            {
+                                UserId = role.UserId,
+                                RoleId = GetUserRoles.Agent
+                            };
+
+
+
+                            db.UserRoles.Remove(role);
+                            db.SaveChanges();
+                            db.UserRoles.Add(identityUserRole);
+                            db.SaveChanges();
                     }
 
 
                 }
                 catch
                 {
-                    IdentityUserRole<string> userRoles = new IdentityUserRole<string>()
-                    {
-                        UserId = Id,
-                        RoleId = GetUserRoles.Agent
-                    };
-
-
-
-                    db.UserRoles.Add(userRoles);
-                    db.SaveChanges();
+                    
                 }
                 ViewBag.NavigatedTO = "Users";
                 var users = db.Users;

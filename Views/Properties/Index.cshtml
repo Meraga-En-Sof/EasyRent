@@ -98,12 +98,16 @@
                                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                                     <a href=" @Url.Action("PropertyDetail","Home",new { Id =item.Id})">Details</a> |
                                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                                    <a href="@Url.Action("MakePayment","Payments", new { Id = item.Id})">Make Paymebt</a>
+                                    @if (User.IsInRole("Tenant"))
+                                    {
+                                        <a href="@Url.Action("MakePayment","Payments", new { Id = item.Id})">Make Payment</a>
+                                    }
+
                                     @if (!string.IsNullOrEmpty(item.ImageName) && User.IsInRole("Admin"))
                                     {
                                         if (item.isDisplayed == true)
                                         {
-                                            <a asp-action="UnShow" asp-route-id="@item.Id">Show in Home page</a>
+                                            <a asp-action="UnShow" asp-route-id="@item.Id">Don't show in Home page</a>
                                         }
                                         else if (item.isDisplayed == false)
                                         {
@@ -176,7 +180,7 @@
                                     @Html.DisplayFor(modelItem => item.VideoLink)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.ClosedTo.Id)
+                                    @Html.DisplayFor(modelItem => item.ClosedTo.Email)
                                 </td>
 
                             </tr>

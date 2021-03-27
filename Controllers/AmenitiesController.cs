@@ -22,12 +22,14 @@ namespace EasyRent.Controllers
         // GET: Amenities
         public async Task<IActionResult> Index()
         {
+            ViewBag.NavigatedTO = "Amenity";
             return View(await _context.Amenities.ToListAsync());
         }
 
         // GET: Amenities/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.NavigatedTO = "Amenity";
             if (id == null)
             {
                 return NotFound();
@@ -46,6 +48,7 @@ namespace EasyRent.Controllers
         // GET: Amenities/Create
         public IActionResult Create()
         {
+            ViewBag.NavigatedTO = "Amenity";
             return View();
         }
 
@@ -56,6 +59,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] Amenities amenities)
         {
+            ViewBag.NavigatedTO = "Amenity";
             if (ModelState.IsValid)
             {
                 _context.Add(amenities);
@@ -68,6 +72,7 @@ namespace EasyRent.Controllers
         // GET: Amenities/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.NavigatedTO = "Amenity";
             if (id == null)
             {
                 return NotFound();
@@ -88,6 +93,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Amenities amenities)
         {
+            ViewBag.NavigatedTO = "Amenity";
             if (id != amenities.Id)
             {
                 return NotFound();

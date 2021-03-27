@@ -14,6 +14,7 @@
         <form asp-action="MakePayment" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
            <input type="hidden" value="@Model.PropertyId" asp-for="PropertyId" />
+           <input type="hidden" value="0" asp-for="@Model.Id" />
             <div class="form-group">
                 <label asp-for="ImageName" class="control-label"></label>
                 <input asp-for="UploadedFile" type="file" class="form-control" />

@@ -97,12 +97,10 @@
                                 @if (User.IsInRole("Admin"))
                                 {
 
-                                    <a href="@Url.Action("Agent","User",new { Id = item.Id})" class="btn btn-sm btn-primary">
-                                        <i class="fas fa-user"></i> Make Agent/Landlord
-                                    </a>
+                                   
 
 
-                                    <a href="@Url.Action("Blog","User",new { Id = item.Id})" class="btn btn-sm btn-primary">
+                                    <a href="@Url.Action("Tenant","User",new { Id = item.Id})" class="btn btn-sm btn-primary">
                                         <i class="fas fa-user"></i> Make Tenant
                                     </a>
                                 }

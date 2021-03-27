@@ -19,23 +19,37 @@
         </ol>
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
+            @{
+                int i = 0;
+                string isactive = "active";
+
+            } 
             @foreach (var item in Model.SliderProperties)
             {
-                <div class="item active">
+            <div class="item @isactive">
+                @if (!string.IsNullOrEmpty(item.ImageName))
+                {
                     <img alt="@item.Name" src="~/Images/@item.ImageName">
-                    <div class="carousel-caption">
-                        <h1 class="animated bounceInLeft">
-                            @item.Name
-                        </h1>
-                        <p class="animated bounceInRight">
-                            @item.Address
-                            <!-- <a class="active animated fadeInUp" href="#">Contact Agent</a> -->
-                            <a class="btn button-md button-theme animated fadeInUp" href="@Url.Action("PropertyDetail","Home", new { Id = item.Id})">
-                                Learn More
-                            </a>
-                    </div>
+                }
+                else
+                {
+                    <img alt="@item.Name" src="~/Images/generic-property.jpg">
+                }
+
+                <div class="carousel-caption">
+                    <h1 class="animated bounceInLeft">
+                        @item.Name
+                    </h1>
+                    <p class="animated bounceInRight">
+                        @item.Address
+                        <!-- <a class="active animated fadeInUp" href="#">Contact Agent</a> -->
+                        <a class="btn button-md button-theme animated fadeInUp" href="@Url.Action("PropertyDetail","Home", new { Id = item.Id})">
+                            Learn More
+                        </a>
                 </div>
-             }
+            </div>
+                isactive = " ";
+            }
 
         </div>
     </div>
@@ -129,989 +143,7 @@
 </div>
 <div class="clearfix">
 </div>
-<!--=========================================
-    =            Section form search            =
-    ==========================================-->
-<div class="wrap-form-property">
-    <div class="container">
-        <div class="row wow">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="title-head">
-                    <h3 class="text-center mb30 wow fadeInRight delay-07s">
-                        Find the property you are looking for
-                    </h3>
-                    <div class="c-line c-line-center c-line-short c-dot c-bg-yellow c-bg-after-yellow">
-                    </div>
-                </div>
-                <div class="panel panel-default wow fadeInLeft delay-07s">
-                    <div class="panel-body">
-                        <form asp-action="LargeFilter" asp-controller="Home">
-                            <div class="col-xs-12 col-sm-12 col-md-4">
-                                <div class="form-group mt15">
-                                    <input asp-for="Keyword" class="form-control input-lg" placeholder="Keyword" type="text">
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
-                                <div class="form-group mt15">
-                                    <!-- single dropdown -->
-                                    <select asp-for="Country" class="form-control chosen-select" data-placeholder="Choose a Country...">
-                                        <option value="NONE">
-                                            Select your country
-                                        </option>
-                                        <option value="AC">
-                                            Ascension Island
-                                        </option>
-                                        <option value="AD">
-                                            Andorra
-                                        </option>
-                                        <option value="AE">
-                                            United Arab Emirates
-                                        </option>
-                                        <option value="AF">
-                                            Afghanistan
-                                        </option>
-                                        <option value="AG">
-                                            Antigua and Barbuda
-                                        </option>
-                                        <option value="AI">
-                                            Anguilla
-                                        </option>
-                                        <option value="AL">
-                                            Albania
-                                        </option>
-                                        <option value="AM">
-                                            Armenia
-                                        </option>
-                                        <option value="AN">
-                                            Netherlands Antilles
-                                        </option>
-                                        <option value="AO">
-                                            Angola
-                                        </option>
-                                        <option value="AQ">
-                                            Antarctica
-                                        </option>
-                                        <option value="AR">
-                                            Argentina
-                                        </option>
-                                        <option value="AS">
-                                            American Samoa
-                                        </option>
-                                        <option value="AT">
-                                            Austria
-                                        </option>
-                                        <option value="AU">
-                                            Australia
-                                        </option>
-                                        <option value="AW">
-                                            Aruba
-                                        </option>
-                                        <option value="AX">
-                                            Aland Islands
-                                        </option>
-                                        <option value="AZ">
-                                            Azerbaijan
-                                        </option>
-                                        <option value="BA">
-                                            Bosnia and Herzegovina
-                                        </option>
-                                        <option value="BB">
-                                            Barbados
-                                        </option>
-                                        <option value="BD">
-                                            Bangladesh
-                                        </option>
-                                        <option value="BE">
-                                            Belgium
-                                        </option>
-                                        <option value="BF">
-                                            Burkina Faso
-                                        </option>
-                                        <option value="BG">
-                                            Bulgaria
-                                        </option>
-                                        <option value="BH">
-                                            Bahrain
-                                        </option>
-                                        <option value="BI">
-                                            Burundi
-                                        </option>
-                                        <option value="BJ">
-                                            Benin
-                                        </option>
-                                        <option value="BL">
-                                            Saint Barthelemy
-                                        </option>
-                                        <option value="BM">
-                                            Bermuda
-                                        </option>
-                                        <option value="BN">
-                                            Brunei
-                                        </option>
-                                        <option value="BO">
-                                            Bolivia
-                                        </option>
-                                        <option value="BQ">
-                                            British Antarctic Territory
-                                        </option>
-                                        <option value="BR">
-                                            Brazil
-                                        </option>
-                                        <option value="BS">
-                                            Bahamas
-                                        </option>
-                                        <option value="BT">
-                                            Bhutan
-                                        </option>
-                                        <option value="BV">
-                                            Bouvet Island
-                                        </option>
-                                        <option value="BW">
-                                            Botswana
-                                        </option>
-                                        <option value="BY">
-                                            Belarus
-                                        </option>
-                                        <option value="BZ">
-                                            Belize
-                                        </option>
-                                        <option value="CA">
-                                            Canada
-                                        </option>
-                                        <option value="CC">
-                                            Cocos [Keeling] Islands
-                                        </option>
-                                        <option value="CD">
-                                            Congo - Kinshasa
-                                        </option>
-                                        <option value="CF">
-                                            Central African Republic
-                                        </option>
-                                        <option value="CG">
-                                            Congo - Brazzaville
-                                        </option>
-                                        <option value="CH">
-                                            Switzerland
-                                        </option>
-                                        <option value="CI">
-                                            Cote d'Ivoire
-                                        </option>
-                                        <option value="CK">
-                                            Cook Islands
-                                        </option>
-                                        <option value="CL">
-                                            Chile
-                                        </option>
-                                        <option value="CM">
-                                            Cameroon
-                                        </option>
-                                        <option value="CN">
-                                            China
-                                        </option>
-                                        <option value="CO">
-                                            Colombia
-                                        </option>
-                                        <option value="CP">
-                                            Clipperton Island
-                                        </option>
-                                        <option value="CR">
-                                            Costa Rica
-                                        </option>
-                                        <option value="CS">
-                                            Serbia and Montenegro
-                                        </option>
-                                        <option value="CT">
-                                            Canton and Enderbury Islands
-                                        </option>
-                                        <option value="CU">
-                                            Cuba
-                                        </option>
-                                        <option value="CV">
-                                            Cape Verde
-                                        </option>
-                                        <option value="CX">
-                                            Christmas Island
-                                        </option>
-                                        <option value="CY">
-                                            Cyprus
-                                        </option>
-                                        <option value="CZ">
-                                            Czech Republic
-                                        </option>
-                                        <option value="DD">
-                                            East Germany
-                                        </option>
-                                        <option value="DE">
-                                            Germany
-                                        </option>
-                                        <option value="DG">
-                                            Diego Garcia
-                                        </option>
-                                        <option value="DJ">
-                                            Djibouti
-                                        </option>
-                                        <option value="DK">
-                                            Denmark
-                                        </option>
-                                        <option value="DM">
-                                            Dominica
-                                        </option>
-                                        <option value="DO">
-                                            Dominican Republic
-                                        </option>
-                                        <option value="DZ">
-                                            Algeria
-                                        </option>
-                                        <option value="EA">
-                                            Ceuta and Melilla
-                                        </option>
-                                        <option value="EC">
-                                            Ecuador
-                                        </option>
-                                        <option value="EE">
-                                            Estonia
-                                        </option>
-                                        <option value="EG">
-                                            Egypt
-                                        </option>
-                                        <option value="EH">
-                                            Western Sahara
-                                        </option>
-                                        <option value="ER">
-                                            Eritrea
-                                        </option>
-                                        <option value="ES">
-                                            Spain
-                                        </option>
-                                        <option value="ET">
-                                            Ethiopia
-                                        </option>
-                                        <option value="EU">
-                                            European Union
-                                        </option>
-                                        <option value="FI">
-                                            Finland
-                                        </option>
-                                        <option value="FJ">
-                                            Fiji
-                                        </option>
-                                        <option value="FK">
-                                            Falkland Islands
-                                        </option>
-                                        <option value="FM">
-                                            Micronesia
-                                        </option>
-                                        <option value="FO">
-                                            Faroe Islands
-                                        </option>
-                                        <option value="FQ">
-                                            French Southern and Antarctic Territories
-                                        </option>
-                                        <option value="FR">
-                                            France
-                                        </option>
-                                        <option value="FX">
-                                            Metropolitan France
-                                        </option>
-                                        <option value="GA">
-                                            Gabon
-                                        </option>
-                                        <option value="GB">
-                                            United Kingdom
-                                        </option>
-                                        <option value="GD">
-                                            Grenada
-                                        </option>
-                                        <option value="GE">
-                                            Georgia
-                                        </option>
-                                        <option value="GF">
-                                            French Guiana
-                                        </option>
-                                        <option value="GG">
-                                            Guernsey
-                                        </option>
-                                        <option value="GH">
-                                            Ghana
-                                        </option>
-                                        <option value="GI">
-                                            Gibraltar
-                                        </option>
-                                        <option value="GL">
-                                            Greenland
-                                        </option>
-                                        <option value="GM">
-                                            Gambia
-                                        </option>
-                                        <option value="GN">
-                                            Guinea
-                                        </option>
-                                        <option value="GP">
-                                            Guadeloupe
-                                        </option>
-                                        <option value="GQ">
-                                            Equatorial Guinea
-                                        </option>
-                                        <option value="GR">
-                                            Greece
-                                        </option>
-                                        <option value="GS">
-                                            South Georgia and the South Sandwich Islands
-                                        </option>
-                                        <option value="GT">
-                                            Guatemala
-                                        </option>
-                                        <option value="GU">
-                                            Guam
-                                        </option>
-                                        <option value="GW">
-                                            Guinea-Bissau
-                                        </option>
-                                        <option value="GY">
-                                            Guyana
-                                        </option>
-                                        <option value="HK">
-                                            Hong Kong SAR China
-                                        </option>
-                                        <option value="HM">
-                                            Heard Island and McDonald Islands
-                                        </option>
-                                        <option value="HN">
-                                            Honduras
-                                        </option>
-                                        <option value="HR">
-                                            Croatia
-                                        </option>
-                                        <option value="HT">
-                                            Haiti
-                                        </option>
-                                        <option value="HU">
-                                            Hungary
-                                        </option>
-                                        <option value="IC">
-                                            Canary Islands
-                                        </option>
-                                        <option value="ID">
-                                            Indonesia
-                                        </option>
-                                        <option value="IE">
-                                            Ireland
-                                        </option>
-                                        <option value="IL">
-                                            Israel
-                                        </option>
-                                        <option value="IM">
-                                            Isle of Man
-                                        </option>
-                                        <option value="IN">
-                                            India
-                                        </option>
-                                        <option value="IO">
-                                            British Indian Ocean Territory
-                                        </option>
-                                        <option value="IQ">
-                                            Iraq
-                                        </option>
-                                        <option value="IR">
-                                            Iran
-                                        </option>
-                                        <option value="IS">
-                                            Iceland
-                                        </option>
-                                        <option value="IT">
-                                            Italy
-                                        </option>
-                                        <option value="JE">
-                                            Jersey
-                                        </option>
-                                        <option value="JM">
-                                            Jamaica
-                                        </option>
-                                        <option value="JO">
-                                            Jordan
-                                        </option>
-                                        <option value="JP">
-                                            Japan
-                                        </option>
-                                        <option value="JT">
-                                            Johnston Island
-                                        </option>
-                                        <option value="KE">
-                                            Kenya
-                                        </option>
-                                        <option value="KG">
-                                            Kyrgyzstan
-                                        </option>
-                                        <option value="KH">
-                                            Cambodia
-                                        </option>
-                                        <option value="KI">
-                                            Kiribati
-                                        </option>
-                                        <option value="KM">
-                                            Comoros
-                                        </option>
-                                        <option value="KN">
-                                            Saint Kitts and Nevis
-                                        </option>
-                                        <option value="KP">
-                                            North Korea
-                                        </option>
-                                        <option value="KR">
-                                            South Korea
-                                        </option>
-                                        <option value="KW">
-                                            Kuwait
-                                        </option>
-                                        <option value="KY">
-                                            Cayman Islands
-                                        </option>
-                                        <option value="KZ">
-                                            Kazakhstan
-                                        </option>
-                                        <option value="LA">
-                                            Laos
-                                        </option>
-                                        <option value="LB">
-                                            Lebanon
-                                        </option>
-                                        <option value="LC">
-                                            Saint Lucia
-                                        </option>
-                                        <option value="LI">
-                                            Liechtenstein
-                                        </option>
-                                        <option value="LK">
-                                            Sri Lanka
-                                        </option>
-                                        <option value="LR">
-                                            Liberia
-                                        </option>
-                                        <option value="LS">
-                                            Lesotho
-                                        </option>
-                                        <option value="LT">
-                                            Lithuania
-                                        </option>
-                                        <option value="LU">
-                                            Luxembourg
-                                        </option>
-                                        <option value="LV">
-                                            Latvia
-                                        </option>
-                                        <option value="LY">
-                                            Libya
-                                        </option>
-                                        <option value="MA">
-                                            Morocco
-                                        </option>
-                                        <option value="MC">
-                                            Monaco
-                                        </option>
-                                        <option value="MD">
-                                            Moldova
-                                        </option>
-                                        <option value="ME">
-                                            Montenegro
-                                        </option>
-                                        <option value="MF">
-                                            Saint Martin
-                                        </option>
-                                        <option value="MG">
-                                            Madagascar
-                                        </option>
-                                        <option value="MH">
-                                            Marshall Islands
-                                        </option>
-                                        <option value="MI">
-                                            Midway Islands
-                                        </option>
-                                        <option value="MK">
-                                            Macedonia
-                                        </option>
-                                        <option value="ML">
-                                            Mali
-                                        </option>
-                                        <option value="MM">
-                                            Myanmar [Burma]
-                                        </option>
-                                        <option value="MN">
-                                            Mongolia
-                                        </option>
-                                        <option value="MO">
-                                            Macau SAR China
-                                        </option>
-                                        <option value="MP">
-                                            Northern Mariana Islands
-                                        </option>
-                                        <option value="MQ">
-                                            Martinique
-                                        </option>
-                                        <option value="MR">
-                                            Mauritania
-                                        </option>
-                                        <option value="MS">
-                                            Montserrat
-                                        </option>
-                                        <option value="MT">
-                                            Malta
-                                        </option>
-                                        <option value="MU">
-                                            Mauritius
-                                        </option>
-                                        <option value="MV">
-                                            Maldives
-                                        </option>
-                                        <option value="MW">
-                                            Malawi
-                                        </option>
-                                        <option value="MX">
-                                            Mexico
-                                        </option>
-                                        <option value="MY">
-                                            Malaysia
-                                        </option>
-                                        <option value="MZ">
-                                            Mozambique
-                                        </option>
-                                        <option value="NA">
-                                            Namibia
-                                        </option>
-                                        <option value="NC">
-                                            New Caledonia
-                                        </option>
-                                        <option value="NE">
-                                            Niger
-                                        </option>
-                                        <option value="NF">
-                                            Norfolk Island
-                                        </option>
-                                        <option value="NG">
-                                            Nigeria
-                                        </option>
-                                        <option value="NI">
-                                            Nicaragua
-                                        </option>
-                                        <option value="NL">
-                                            Netherlands
-                                        </option>
-                                        <option value="NO">
-                                            Norway
-                                        </option>
-                                        <option value="NP">
-                                            Nepal
-                                        </option>
-                                        <option value="NQ">
-                                            Dronning Maud Land
-                                        </option>
-                                        <option value="NR">
-                                            Nauru
-                                        </option>
-                                        <option value="NT">
-                                            Neutral Zone
-                                        </option>
-                                        <option value="NU">
-                                            Niue
-                                        </option>
-                                        <option value="NZ">
-                                            New Zealand
-                                        </option>
-                                        <option value="OM">
-                                            Oman
-                                        </option>
-                                        <option value="PA">
-                                            Panama
-                                        </option>
-                                        <option value="PC">
-                                            Pacific Islands Trust Territory
-                                        </option>
-                                        <option value="PE">
-                                            Peru
-                                        </option>
-                                        <option value="PF">
-                                            French Polynesia
-                                        </option>
-                                        <option value="PG">
-                                            Papua New Guinea
-                                        </option>
-                                        <option value="PH">
-                                            Philippines
-                                        </option>
-                                        <option value="PK">
-                                            Pakistan
-                                        </option>
-                                        <option value="PL">
-                                            Poland
-                                        </option>
-                                        <option value="PM">
-                                            Saint Pierre and Miquelon
-                                        </option>
-                                        <option value="PN">
-                                            Pitcairn Islands
-                                        </option>
-                                        <option value="PR">
-                                            Puerto Rico
-                                        </option>
-                                        <option value="PS">
-                                            Palestinian Territories
-                                        </option>
-                                        <option value="PT">
-                                            Portugal
-                                        </option>
-                                        <option value="PU">
-                                            U.S. Miscellaneous Pacific Islands
-                                        </option>
-                                        <option value="PW">
-                                            Palau
-                                        </option>
-                                        <option value="PY">
-                                            Paraguay
-                                        </option>
-                                        <option value="PZ">
-                                            Panama Canal Zone
-                                        </option>
-                                        <option value="QA">
-                                            Qatar
-                                        </option>
-                                        <option value="QO">
-                                            Outlying Oceania
-                                        </option>
-                                        <option value="RE">
-                                            R?union
-                                        </option>
-                                        <option value="RO">
-                                            Romania
-                                        </option>
-                                        <option value="RS">
-                                            Serbia
-                                        </option>
-                                        <option value="RU">
-                                            Russia
-                                        </option>
-                                        <option value="RW">
-                                            Rwanda
-                                        </option>
-                                        <option value="SA">
-                                            Saudi Arabia
-                                        </option>
-                                        <option value="SB">
-                                            Solomon Islands
-                                        </option>
-                                        <option value="SC">
-                                            Seychelles
-                                        </option>
-                                        <option value="SD">
-                                            Sudan
-                                        </option>
-                                        <option value="SE">
-                                            Sweden
-                                        </option>
-                                        <option value="SG">
-                                            Singapore
-                                        </option>
-                                        <option value="SH">
-                                            Saint Helena
-                                        </option>
-                                        <option value="SI">
-                                            Slovenia
-                                        </option>
-                                        <option value="SJ">
-                                            Svalbard and Jan Mayen
-                                        </option>
-                                        <option value="SK">
-                                            Slovakia
-                                        </option>
-                                        <option value="SL">
-                                            Sierra Leone
-                                        </option>
-                                        <option value="SM">
-                                            San Marino
-                                        </option>
-                                        <option value="SN">
-                                            Senegal
-                                        </option>
-                                        <option value="SO">
-                                            Somalia
-                                        </option>
-                                        <option value="SR">
-                                            Suriname
-                                        </option>
-                                        <option value="ST">
-                                            Sao Tome and Principe
-                                        </option>
-                                        <option value="SU">
-                                            Union of Soviet Socialist Republics
-                                        </option>
-                                        <option value="SV">
-                                            El Salvador
-                                        </option>
-                                        <option value="SY">
-                                            Syria
-                                        </option>
-                                        <option value="SZ">
-                                            Swaziland
-                                        </option>
-                                        <option value="TA">
-                                            Tristan da Cunha
-                                        </option>
-                                        <option value="TC">
-                                            Turks and Caicos Islands
-                                        </option>
-                                        <option value="TD">
-                                            Chad
-                                        </option>
-                                        <option value="TF">
-                                            French Southern Territories
-                                        </option>
-                                        <option value="TG">
-                                            Togo
-                                        </option>
-                                        <option value="TH">
-                                            Thailand
-                                        </option>
-                                        <option value="TJ">
-                                            Tajikistan
-                                        </option>
-                                        <option value="TK">
-                                            Tokelau
-                                        </option>
-                                        <option value="TL">
-                                            Timor-Leste
-                                        </option>
-                                        <option value="TM">
-                                            Turkmenistan
-                                        </option>
-                                        <option value="TN">
-                                            Tunisia
-                                        </option>
-                                        <option value="TO">
-                                            Tonga
-                                        </option>
-                                        <option value="TR">
-                                            Turkey
-                                        </option>
-                                        <option value="TT">
-                                            Trinidad and Tobago
-                                        </option>
-                                        <option value="TV">
-                                            Tuvalu
-                                        </option>
-                                        <option value="TW">
-                                            Taiwan
-                                        </option>
-                                        <option value="TZ">
-                                            Tanzania
-                                        </option>
-                                        <option value="UA">
-                                            Ukraine
-                                        </option>
-                                        <option value="UG">
-                                            Uganda
-                                        </option>
-                                        <option value="UM">
-                                            U.S. Minor Outlying Islands
-                                        </option>
-                                        <option value="US">
-                                            United States
-                                        </option>
-                                        <option value="UY">
-                                            Uruguay
-                                        </option>
-                                        <option value="UZ">
-                                            Uzbekistan
-                                        </option>
-                                        <option value="VA">
-                                            Vatican City
-                                        </option>
-                                        <option value="VC">
-                                            Saint Vincent and the Grenadines
-                                        </option>
-                                        <option value="VD">
-                                            North Vietnam
-                                        </option>
-                                        <option value="VE">
-                                            Venezuela
-                                        </option>
-                                        <option value="VG">
-                                            British Virgin Islands
-                                        </option>
-                                        <option value="VI">
-                                            U.S. Virgin Islands
-                                        </option>
-                                        <option value="VN">
-                                            Vietnam
-                                        </option>
-                                        <option value="VU">
-                                            Vanuatu
-                                        </option>
-                                        <option value="WF">
-                                            Wallis and Futuna
-                                        </option>
-                                        <option value="WK">
-                                            Wake Island
-                                        </option>
-                                        <option value="WS">
-                                            Samoa
-                                        </option>
-                                        <option value="YD">
-                                            People's Democratic Republic of Yemen
-                                        </option>
-                                        <option value="YE">
-                                            Yemen
-                                        </option>
-                                        <option value="YT">
-                                            Mayotte
-                                        </option>
-                                        <option value="ZA">
-                                            South Africa
-                                        </option>
-                                        <option value="ZM">
-                                            Zambia
-                                        </option>
-                                        <option value="ZW">
-                                            Zimbabwe
-                                        </option>
-                                        <option value="ZZ">
-                                            Unknown Region
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
-                                <div class="form-group mt15">
-                                    <!-- single dropdown -->
-                                    <select asp-for="PropertyType" class="chosen-select" data-placeholder="property type" id="property-type">
-                                        <option value="0">
-                                            property Type
-                                        </option>
-                                        @foreach (var item in Model.PropertyTypes)
-                                        {
-                                            <option value="@item.Id">
-                                                @item.Name
-                                            </option>
-                                        }
 
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-2">
-                                <div class="form-group mt15">
-                                    <!-- single dropdown -->
-                                    <select asp-for="PropertyStatus" class="chosen-select" data-placeholder="Property Status" id="property-status">
-                                        <option value="0">
-                                            Property Status
-                                        </option>
-                                        @foreach (var item in Model.PropertyModes)
-                                        {
-                                            <option value="@item.Id">
-                                                @item.Name
-                                            </option>
-                                        }
-
-
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="clearfix">
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-2">
-                                <div class="form-group mt15">
-                                    <!-- single dropdown -->
-                                    <select asp-for="NumberofBedrooms" class="chosen-select" data-placeholder="Bed Room" id="bedroom">
-                                        <option value="0">
-                                            Bed Room
-                                        </option>
-                                        <option value="1">
-                                            1
-                                        </option>
-                                        <option value="2">
-                                            2
-                                        </option>
-                                        <option value="3">
-                                            3
-                                        </option>
-                                        <option value="4">
-                                            4
-                                        </option>
-                                        <option value="5">
-                                            5
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-2">
-                                <div class="form-group mt15">
-                                    <!-- single dropdown -->
-                                    <select asp-for="NumberOfBathrooms" class="chosen-select" data-placeholder="Bath Room" id="bathroom">
-                                        <option value="0">
-                                            Bath Room
-                                        </option>
-                                        <option value="1">
-                                            1
-                                        </option>
-                                        <option value="2">
-                                            2
-                                        </option>
-                                        <option value="3">
-                                            3
-                                        </option>
-                                        <option value="4">
-                                            4
-                                        </option>
-                                        <option value="5">
-                                            5
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-12 col-md-3">
-                                <div class="form-group mt15">
-                                    <div class="single-query-slider">
-                                        <label>
-                                            Price Range:
-                                        </label>
-                                        <div class="price text-right">
-                                            <span>
-                                                $
-                                            </span>
-                                            <div class="leftLabel">
-                                            </div>
-                                            <span>
-                                                to $
-                                            </span>
-                                            <div class="rightLabel">
-                                            </div>
-                                        </div>
-                                        <div class="nstSlider" data-cur_max="45000" data-cur_min="0" data-range_max="45000" data-range_min="0">
-                                            <div class="bar">
-                                            </div>
-                                            <div class="leftGrip">
-                                            </div>
-                                            <div class="rightGrip">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
-                                <div class="form-group mt15">
-                                    <a class="btn button-md button-theme btn-block mt15" href="#">
-                                        <i class="fa fa-search">
-                                        </i>
-                                        Search Filter
-                                    </a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="clearfix">
-</div>
 <!--=========================================
     =            Section features           =
     ==========================================-->
@@ -1134,7 +166,7 @@
                                 @item.Title
                             </h3>
                             <p>
-                                @item.Content
+                                @Html.Raw(item.Content)
                             </p>
                         </div>
                     }
@@ -1157,10 +189,13 @@
                     Popular Property
                 </h3>
                 <div class="slider-popular-property owl-carousel owl-theme">
+                    @{
+                        string isactivez = "active";
 
+                    }
                     @foreach (var item in Model.PopularProperties)
                     {
-                        <div class="item">
+                        <div class="item @isactivez">
                             <a href="@Url.Action("PropertyDetail","Home", new { Id = item.Id})" target="_blank">
                                 <div class="card">
                                     <div class="card-image">
@@ -1198,7 +233,7 @@
                                                 </span>
                                                 <div class="title-properti">
                                                     <h4>
-                                                        @item.Description
+                                                        @Html.Raw(item.Description)
                                                     </h4>
                                                 </div>
                                             </div>
@@ -1253,7 +288,8 @@
                                 </div>
                             </a>
                         </div>
-                    }
+                                                    isactivez = "";
+                                                }
 
 
                 </div>
@@ -1271,12 +307,15 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <h3>Recent Property</h3>
+                <h3>Recent Property ( @Model.RecentProperties.Count() )</h3>
                 <div class="recent-property owl-carousel owl-theme">
+                    @{
+                        string isactives = "active";
 
+                    }
                     @foreach (var item in Model.RecentProperties)
                     {
-                        <div class="item">
+                        <div class="item @isactives">
                             <a href=" @Url.Action("PropertyDetail", "Home", new { Id = item.Id })">
                                 <div class="listing-item compact">
                                     <div class="listing-img-container">
@@ -1293,7 +332,7 @@
                                                 @item.Name
                                                 <i>
 
-                                                    @{ 
+                                                    @{
                                                         string ammount = "$" + item.Price + "  / monthly";
                                                         if (item.PropertyModeId == 1)
                                                         {
@@ -1303,7 +342,7 @@
                                                         }
                                                     }
 
-                                                        @ammount
+                                                    @ammount
 
                                                 </i>
                                             </span>
@@ -1339,7 +378,8 @@
                                 </div>
                             </a>
                         </div>
-                    }
+                                                            isactives = "";
+                                                        }
                 </div>
             </div>
         </div>
@@ -1446,9 +486,13 @@
                             </li>
                         </ol>
                         <div class="carousel-inner full_display" role="listbox">
+                            @{
+                                string isactivef = "active";
+
+                            }
                             @foreach (var item in Model.Testimonials)
                             {
-                                <div class="item sngl-testimonial active">
+                                <div class="item sngl-testimonial @isactivef">
                                     <div class="sngle-tsmt">
                                         <div class="client-dsc">
                                             <p>
@@ -1464,6 +508,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                isactivef = "";
                             }
 
 

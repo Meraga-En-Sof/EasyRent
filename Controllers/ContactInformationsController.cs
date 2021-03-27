@@ -22,12 +22,15 @@ namespace EasyRent.Controllers
         // GET: ContactInformations
         public async Task<IActionResult> Index()
         {
+            ViewBag.NavigatedTO = "ContactInfo";
             return View(await _context.ContactInformation.ToListAsync());
+
         }
 
         // GET: ContactInformations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.NavigatedTO = "ContactInfo";
             if (id == null)
             {
                 return NotFound();
@@ -56,6 +59,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Location,Email,PhoneNumber,GoogleMapPlugin")] ContactInformation contactInformation)
         {
+            ViewBag.NavigatedTO = "ContactInfo";
             if (ModelState.IsValid)
             {
                 _context.Add(contactInformation);
@@ -68,6 +72,7 @@ namespace EasyRent.Controllers
         // GET: ContactInformations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.NavigatedTO = "ContactInfo";
             if (id == null)
             {
                 return NotFound();
@@ -88,6 +93,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Location,Email,PhoneNumber,GoogleMapPlugin")] ContactInformation contactInformation)
         {
+            ViewBag.NavigatedTO = "ContactInfo";
             if (id != contactInformation.Id)
             {
                 return NotFound();
@@ -119,6 +125,7 @@ namespace EasyRent.Controllers
         // GET: ContactInformations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewBag.NavigatedTO = "ContactInfo";
             if (id == null)
             {
                 return NotFound();
@@ -139,6 +146,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            ViewBag.NavigatedTO = "ContactInfo";
             var contactInformation = await _context.ContactInformation.FindAsync(id);
             _context.ContactInformation.Remove(contactInformation);
             await _context.SaveChangesAsync();

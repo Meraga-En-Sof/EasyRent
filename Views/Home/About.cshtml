@@ -84,25 +84,30 @@
                             </li>
                         </ol>
                         <div class="carousel-inner full_display" role="listbox">
+                            @{
+                                string isactive = "active";
+
+                            }
                             @foreach (var item in Model.Testimonials)
                             {
-                            <div class="item sngl-testimonial active">
-                                <div class="sngle-tsmt">
-                                    <div class="client-dsc">
-                                        <p>
-                                            @Html.Raw(item.Testimony)
-                                        </p>
-                                    </div>
-                                   
-                                    <img alt="" src="~/Images/@item.User.ImageName">
-                                    <div class="client-dsc">
-                                        <h2>
-                                            @item.User.LastName
-                                        </h2>
+                                <div class="item sngl-testimonial @isactive">
+                                    <div class="sngle-tsmt">
+                                        <div class="client-dsc">
+                                            <p>
+                                                @Html.Raw(item.Testimony)
+                                            </p>
+                                        </div>
 
+                                        <img alt="" src="~/Images/@item.User.ImageName">
+                                        <div class="client-dsc">
+                                            <h2>
+                                                @item.User.LastName
+                                            </h2>
+
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                isactive = "";
                             }
 
 

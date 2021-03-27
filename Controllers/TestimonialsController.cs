@@ -73,7 +73,7 @@ namespace EasyRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin, Agent")]
+        
         public async Task<IActionResult> Create([Bind("Id,Testimony,UserId,isApproved,UploadedFile,ImageName")] Testimonials testimonials)
         {
 
@@ -217,7 +217,7 @@ namespace EasyRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin, Agent")]
+        
         public async Task<IActionResult> Edit(int id, [Bind("Id,Testimony,UserId,isApproved,UploadedFile,ImageName")] Testimonials testimonials)
         {
             if (!User.IsInRole("Admin"))

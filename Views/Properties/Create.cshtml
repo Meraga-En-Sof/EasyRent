@@ -80,17 +80,27 @@
                 <span asp-validation-for="isDealClosed" class="text-danger"></span>
             </div>
 
-            @if (User.IsInRole("Admin"))
+            @if (User.IsInRole("Admin, Agent"))
             {
-                <div class="form-group">
-                    <label asp-for="isDisplayed" class="control-label"></label>
-                    <input asp-for="isDisplayed" class="form-check" />
-                    <span asp-validation-for="isDisplayed" class="text-danger"></span>
-                </div>
+                if (User.IsInRole("Admin"))
+                {
+                    <div class="form-group">
+                        <label asp-for="isDisplayed" class="control-label"></label>
+                        <input asp-for="isDisplayed" class="form-check" />
+                        <span asp-validation-for="isDisplayed" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="UserId" class="control-label"></label>
+                        <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                    </div>
+                }
+
+              
 
                 <div class="form-group">
-                    <label asp-for="UserId" class="control-label"></label>
-                    <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                    <label asp-for="ClosedToId" class="control-label"></label>
+                    <select asp-for="ClosedToId" class="form-control" asp-items="ViewBag.ClosedToId"></select>
                 </div>
             }
 
@@ -106,14 +116,11 @@
 
             <div class="form-group">
                 <label asp-for="VideoLink" class="control-label"></label>
-               
+
                 <input asp-for="VideoLink" class="form-control" />
 
             </div>
-            <div class="form-group">
-                <label asp-for="ClosedToId" class="control-label"></label>
-                <select asp-for="ClosedToId" class="form-control" asp-items="ViewBag.ClosedToId"></select>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

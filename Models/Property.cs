@@ -95,7 +95,7 @@ namespace EasyRent.Models
 
         public User ClosedTo { get; set; }
 
-        [Display(Name = "Closed To")]
+        [Display(Name = "Tenant Email")]
         public string ClosedToId { get; set; }
 
 

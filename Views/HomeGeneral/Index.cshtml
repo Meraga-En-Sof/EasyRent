@@ -188,7 +188,11 @@
                                         <div class="content">
                                             <ul class="menu-col">
                                                 <li><a href="@Url.Action("PropertyList","Home")">List of Properties</a></li>
-                                                <li><a href="@Url.Action("Landlords","User")">My Landlords</a></li>
+                                                @if (User.IsInRole("Tenant"))
+                                                {
+                                                    <li><a href="@Url.Action("Landlords","User")">My Landlords</a></li>
+                                                }
+
                                             </ul>
                                         </div>
                                     </div><!-- end col-3 -->
@@ -293,7 +297,9 @@
                         </div>
                         <p>
                             <span class="copyright text-uppercase">WHO WE ARE?</span>
-                            RENT EASY Nigeria‘s No 1 Real Estate Company, based in Nigeria. The Largest Real Estate Investment Firm in Nigeria. One of top real estate companies in Nigeria. Real estate investment firm positioned to deliver a cutting edge and competitive real estate solutions to our valued clients. We engage in real estate development, brokerage and management. We offer good and flexible payment plans on all our product and services.
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+
                         </p>
                     </div>
                     <div class="col-sm-12 col-md-3">

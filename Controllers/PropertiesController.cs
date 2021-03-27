@@ -29,6 +29,7 @@ namespace EasyRent.Controllers
         // GET: Properties
         public async Task<IActionResult> Index()
         {
+            ViewBag.NavigatedTO = "Property";
             var applicationDbContext = _context.Properties.Include(m => m.ClosedTo).Include(m => m.PropertyMode).Include(m => m.PropertyType).Include(m => m.User);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -37,7 +38,7 @@ namespace EasyRent.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Show(int id)
         {
-
+            ViewBag.NavigatedTO = "Property";
             if (id == null)
             {
                 return NotFound();
@@ -57,7 +58,7 @@ namespace EasyRent.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UnShow(int id)
         {
-
+            ViewBag.NavigatedTO = "Property";
             if (id == null)
             {
                 return NotFound();
@@ -78,6 +79,7 @@ namespace EasyRent.Controllers
         // GET: Properties/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.NavigatedTO = "Property";
             if (id == null)
             {
                 return NotFound();
@@ -100,6 +102,7 @@ namespace EasyRent.Controllers
         // GET: Properties/Create
         public IActionResult Create()
         {
+            ViewBag.NavigatedTO = "Property";
             ViewData["ClosedToId"] = new SelectList(_context.Users, "Id", "UserName");
             ViewData["PropertyModeId"] = new SelectList(_context.propertyModes, "Id", "Name");
             ViewData["PropertyTypeId"] = new SelectList(_context.PropertyTypes, "Id", "Name");
@@ -114,7 +117,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Address,GoogleMapAddress,ImageName,Price,Description,Area,BedRooms,bathrooms,Garage,Stairs,BuildingConditon,FloorPlanImage,isDealClosed,isDisplayed,Country,CurrencyId,PropertyTypeId,PropertyModeId,UserId,VideoLink,ClosedToId,UploadedFile")] Property @property)
         {
-
+            ViewBag.NavigatedTO = "Property";
             if (!User.IsInRole("Admin"))
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -172,6 +175,7 @@ namespace EasyRent.Controllers
         // GET: Properties/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.NavigatedTO = "Property";
             if (id == null)
             {
                 return NotFound();
@@ -196,6 +200,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,GoogleMapAddress,ImageName,Price,Description,Area,BedRooms,bathrooms,Garage,Stairs,BuildingConditon,FloorPlanImage,isDealClosed,isDisplayed,Country,CurrencyId,PropertyTypeId,PropertyModeId,UserId,VideoLink,ClosedToId,UploadedFile")] Property @property)
         {
+            ViewBag.NavigatedTO = "Property";
             if (!User.IsInRole("Admin"))
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -277,6 +282,7 @@ namespace EasyRent.Controllers
         // GET: Properties/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewBag.NavigatedTO = "Property";
             if (id == null)
             {
                 return NotFound();

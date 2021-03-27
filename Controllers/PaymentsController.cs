@@ -29,6 +29,7 @@ namespace EasyRent.Controllers
         // GET: Payments
         public async Task<IActionResult> Index()
         {
+            ViewBag.NavigatedTO = "Payment";
             var applicationDbContext = _context.Payments.Include(p => p.LandLord).Include(p => p.Property).Include(p => p.Tenant);
             if (!User.IsInRole("Admin"))
             {
@@ -45,6 +46,7 @@ namespace EasyRent.Controllers
         // GET: Payments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.NavigatedTO = "Payment";
             if (id == null)
             {
                 return NotFound();
@@ -67,6 +69,7 @@ namespace EasyRent.Controllers
         // GET: Payments/Create
         public IActionResult Create()
         {
+            ViewBag.NavigatedTO = "Payment";
             ViewData["LandLordId"] = new SelectList(_context.Users, "Id", "Id");
             ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Address");
             ViewData["TenantId"] = new SelectList(_context.Users, "Id", "Id");
@@ -77,6 +80,7 @@ namespace EasyRent.Controllers
         [Authorize(Roles = "Tenant")]
         public IActionResult MakePayment(int Id)
         {
+            ViewBag.NavigatedTO = "Payment";
             var property = _context.Properties.Where(m => m.Id == Id).FirstOrDefaultAsync();
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var payment = new Payments()
@@ -91,12 +95,15 @@ namespace EasyRent.Controllers
         [HttpPost]
         public ActionResult MakePayment(Payments payments)
         {
+            
+            ViewBag.NavigatedTO = "Payment";
             var property = _context.Properties.Where(m => m.Id == payments.PropertyId).FirstOrDefault();
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             payments.LandLordId = property.UserId;
             payments.TenantId = userId;
             try
             {
+
                 var iscorrectformat = false;
                 string uniqueName = null;
                 string filePath = null;
@@ -131,6 +138,17 @@ namespace EasyRent.Controllers
 
             }
             payments.PaidOn = DateTime.UtcNow;
+            if (property.PropertyModeId == 1)
+            {
+                payments.ExpiryDate = payments.PaidOn.AddMonths(1);
+            }
+            else
+            {
+                payments.ExpiryDate = DateTime.UtcNow.AddYears(70);
+            }
+            payments.RecieptNumber = new Guid().ToString();
+            _context.Payments.Add(payments);
+            _context.SaveChanges();
             
             return RedirectToAction("Index");
         }
@@ -144,6 +162,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,RecieptNumber,PaidOn,ExpiryDate,ImageName,PropertyId,TenantId,LandLordId")] Payments payments)
         {
+            ViewBag.NavigatedTO = "Payment";
             if (ModelState.IsValid)
             {
                 _context.Add(payments);
@@ -161,6 +180,7 @@ namespace EasyRent.Controllers
         // GET: Payments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.NavigatedTO = "Payment";
             if (id == null)
             {
                 return NotFound();
@@ -184,6 +204,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,RecieptNumber,PaidOn,ExpiryDate,ImageName,PropertyId,TenantId,LandLordId")] Payments payments)
         {
+            ViewBag.NavigatedTO = "Payment";
             if (id != payments.Id)
             {
                 return NotFound();
@@ -220,6 +241,7 @@ namespace EasyRent.Controllers
         // GET: Payments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewBag.NavigatedTO = "Payment";
             if (id == null)
             {
                 return NotFound();
@@ -243,6 +265,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            ViewBag.NavigatedTO = "Payment";
             var payments = await _context.Payments.FindAsync(id);
             _context.Payments.Remove(payments);
             await _context.SaveChangesAsync();
@@ -251,6 +274,7 @@ namespace EasyRent.Controllers
 
         private bool PaymentsExists(int id)
         {
+            ViewBag.NavigatedTO = "Payment";
             return _context.Payments.Any(e => e.Id == id);
         }
     }

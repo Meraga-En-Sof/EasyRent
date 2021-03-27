@@ -22,12 +22,15 @@ namespace EasyRent.Controllers
         // GET: Faqs
         public async Task<IActionResult> Index()
         {
+            ViewBag.NavigatedTO = "Faq";
+
             return View(await _context.Fag.ToListAsync());
         }
 
         // GET: Faqs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.NavigatedTO = "Faq";
             if (id == null)
             {
                 return NotFound();
@@ -46,6 +49,7 @@ namespace EasyRent.Controllers
         // GET: Faqs/Create
         public IActionResult Create()
         {
+            ViewBag.NavigatedTO = "Faq";
             return View();
         }
 
@@ -56,6 +60,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Content")] Faq faq)
         {
+            ViewBag.NavigatedTO = "Faq";
             if (ModelState.IsValid)
             {
                 _context.Add(faq);
@@ -68,6 +73,7 @@ namespace EasyRent.Controllers
         // GET: Faqs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.NavigatedTO = "Faq";
             if (id == null)
             {
                 return NotFound();
@@ -88,6 +94,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Content")] Faq faq)
         {
+            ViewBag.NavigatedTO = "Faq";
             if (id != faq.Id)
             {
                 return NotFound();
@@ -119,6 +126,7 @@ namespace EasyRent.Controllers
         // GET: Faqs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewBag.NavigatedTO = "Faq";
             if (id == null)
             {
                 return NotFound();
@@ -139,6 +147,7 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            ViewBag.NavigatedTO = "Faq";
             var faq = await _context.Fag.FindAsync(id);
             _context.Fag.Remove(faq);
             await _context.SaveChangesAsync();
@@ -147,6 +156,7 @@ namespace EasyRent.Controllers
 
         private bool FaqExists(int id)
         {
+            ViewBag.NavigatedTO = "Faq";
             return _context.Fag.Any(e => e.Id == id);
         }
     }

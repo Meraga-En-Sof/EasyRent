@@ -59,7 +59,7 @@ namespace EasyRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,IconImage,Content")] OurService ourService)
+        public async Task<IActionResult> Create([Bind("Id,Title,IconName,Content")] OurService ourService)
         {
             ViewBag.NavigatedTO = "Services";
             if (ModelState.IsValid)
@@ -93,7 +93,7 @@ namespace EasyRent.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,IconImage,Content")] OurService ourService)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,IconName,Content")] OurService ourService)
         {
             ViewBag.NavigatedTO = "Services";
             if (id != ourService.Id)

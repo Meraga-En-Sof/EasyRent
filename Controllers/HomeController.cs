@@ -32,9 +32,9 @@ namespace EasyRent.Controllers
 
             UserHomeViewModel userGeneralViewModel = new UserHomeViewModel()
             {
-                SliderProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed == true && m.isDisplayed == true),
+                SliderProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDisplayed == true),
                 OurServices = db.OurServices.OrderByDescending(m => m.Id),
-                RecentProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Where(m => m.isDealClosed == false),
+                RecentProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Take(10),
                 PopularProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed),
                 PropertyModes = db.propertyModes,
                 PropertyTypes = db.PropertyTypes,
@@ -69,7 +69,7 @@ namespace EasyRent.Controllers
             {
                 SliderProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed == true && m.isDisplayed == true),
                 OurServices = db.OurServices.OrderByDescending(m => m.Id),
-                RecentProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Where(m => m.isDealClosed == false),
+                RecentProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id),
                 PopularProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed),
                 PropertyModes = db.propertyModes,
                 PropertyTypes = db.PropertyTypes,
@@ -88,13 +88,13 @@ namespace EasyRent.Controllers
             {
                 SliderProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed == true && m.isDisplayed == true),
                 OurServices = db.OurServices.OrderByDescending(m => m.Id),
-                RecentProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Where(m => m.isDealClosed == false),
+                RecentProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id),
                 PopularProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed),
                 PropertyModes = db.propertyModes,
                 PropertyTypes = db.PropertyTypes,
                 Testimonials = db.Testimonials.Include(m => m.User).Where(m => m.isApproved == true),
                 AllProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType),
-                MenuProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Take(10),
+                MenuProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType),
                 SocialMedia = db.SocialMedias.OrderByDescending(m => m.Id).FirstOrDefault()
             };
 
@@ -120,7 +120,7 @@ namespace EasyRent.Controllers
 
             if (!string.IsNullOrEmpty(Id))
             {
-                userGeneralViewModel.RecentProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Where(m => m.isDealClosed == false && m.Address.Contains(Id));
+                userGeneralViewModel.RecentProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Where(m =>  m.Address.Contains(Id));
             }
 
             return View("PropertyList", userGeneralViewModel);
