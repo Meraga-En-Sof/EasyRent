@@ -50,65 +50,7 @@
         </div>
     </div>
 </section>
-<!--===================================
-=            Section agent            =
-====================================-->
-<div class="bg-default wrap-agent pdt40 pdbt60">
-    <div class="container">
-        <div class="row">
-            <div class="page-title">
-                <h3 class="text-center mb40">
-                    Agent Team
-                </h3>
-            </div>
-            @foreach (var item in Model.Agents)
-            {
-                <div class="col-md-4 col-sm-6 wow fadeInLeft delay-07s">
-                    <div class="team-member">
-                        <div class="team-img">
-                            <img alt="team member" class="img-responsive" src="~/Images/@item.ImageName">
-                        </div>
-                        <div class="team-hover">
-                            <div class="desk">
-                                <h4>
-                                    @item.Email
-                                </h4>
-                                <p>
-                                    @item.LastName @item.FirstName
-                                </p>
-                                <a class="btn button-md button-theme" href="@Url.Action("AgentDetail","Home")">
-                                    Agent Profile
-                                </a>
-                            </div>
-                            <div class="s-link">
-                                <a href="@item.FacebookLink">
-                                    <i class="fa fa-facebook">
-                                    </i>
-                                </a>
-                                <a href="@item.TwitterLink">
-                                    <i class="fa fa-twitter">
-                                    </i>
-                                </a>
-                                <a href="@item.LinkedInLink">
-                                    <i class="fa fa-linkedin">
-                                    </i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="team-title">
-                            <h5>
-                                @item.LastName @item.FirstName
-                            </h5>
-                           
-                        </div>
-                    </div>
-                </div>
-            }
 
-
-        </div>
-    </div>
-</div>
 
 <!--=======================================
 =            Section Testimoni            =
@@ -144,22 +86,23 @@
                         <div class="carousel-inner full_display" role="listbox">
                             @foreach (var item in Model.Testimonials)
                             {
-                                <div class="item sngl-testimonial active">
-                                    <div class="sngle-tsmt">
-                                        <div class="client-dsc">
-                                            <p>
-                                                @item.Testimony
-                                            </p>
-                                        </div>
-                                        <img alt="" src="~/Images/@item.User.ImageName">
-                                        <div class="client-dsc">
-                                            <h2>
-                                               @item.User.LastName
-                                            </h2>
-                                          
-                                        </div>
+                            <div class="item sngl-testimonial active">
+                                <div class="sngle-tsmt">
+                                    <div class="client-dsc">
+                                        <p>
+                                            @Html.Raw(item.Testimony)
+                                        </p>
+                                    </div>
+                                   
+                                    <img alt="" src="~/Images/@item.User.ImageName">
+                                    <div class="client-dsc">
+                                        <h2>
+                                            @item.User.LastName
+                                        </h2>
+
                                     </div>
                                 </div>
+                            </div>
                             }
 
 
@@ -188,7 +131,9 @@
 </div>
 <div class="clearfix">
 </div>
-<!--====  End of Section Testimoni  ====-->
+
+
+
 <div class="bg-theme call-to-actions pdt40 pdbt40">
     <div class="container">
         <div class="row">
@@ -204,7 +149,7 @@
                     <h3>
                         Call Us +55 4XX-678-431
                     </h3>
-                   
+
                 </div>
             </div>
         </div>

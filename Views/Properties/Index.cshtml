@@ -99,6 +99,18 @@
                                     <a href=" @Url.Action("PropertyDetail","Home",new { Id =item.Id})">Details</a> |
                                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
                                     <a href="@Url.Action("MakePayment","Payments", new { Id = item.Id})">Make Paymebt</a>
+                                    @if (!string.IsNullOrEmpty(item.ImageName) && User.IsInRole("Admin"))
+                                    {
+                                        if (item.isDisplayed == true)
+                                        {
+                                            <a asp-action="UnShow" asp-route-id="@item.Id">Show in Home page</a>
+                                        }
+                                        else if (item.isDisplayed == false)
+                                        {
+                                            <a asp-action="Show" asp-route-id="@item.Id">Show in Home page</a>
+                                        }
+
+                                    }
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Name)

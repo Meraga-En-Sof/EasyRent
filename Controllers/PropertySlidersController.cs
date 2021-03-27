@@ -169,38 +169,42 @@ namespace EasyRent.Controllers
                 {
 
 
-
-                    try
+                    if (propertySlider.UploadedFile != null)
                     {
-                        var iscorrectformat = false;
-                        string uniqueName = null;
-                        string filePath = null;
-                        FileInfo fi = new FileInfo(propertySlider.UploadedFile.FileName);
 
-                        var actualextension = fi.Extension;
-                        var imageextensions = FileFormat.GetSupportedImageTypeExtensionsList();
-                        foreach (var imageExtension in imageextensions)
+                        try
                         {
-                            if (imageExtension == actualextension)
+                            var iscorrectformat = false;
+                            string uniqueName = null;
+                            string filePath = null;
+                            FileInfo fi = new FileInfo(propertySlider.UploadedFile.FileName);
+
+                            var actualextension = fi.Extension;
+                            var imageextensions = FileFormat.GetSupportedImageTypeExtensionsList();
+                            foreach (var imageExtension in imageextensions)
                             {
-                                iscorrectformat = true;
+                                if (imageExtension == actualextension)
+                                {
+                                    iscorrectformat = true;
+                                }
+                            }
+                            if (iscorrectformat == false)
+                            {
+                                return View(propertySlider);
+                            }
+                            if (propertySlider.UploadedFile != null)
+                            {
+                                string uploadsFolder = Path.Combine(_env.WebRootPath, "Images");
+                                uniqueName = Guid.NewGuid().ToString() + "_" + propertySlider.UploadedFile.FileName;
+                                filePath = Path.Combine(uploadsFolder, uniqueName);
+                                propertySlider.UploadedFile.CopyTo(new FileStream(filePath, FileMode.Create));
+                                propertySlider.ImageName = uniqueName;
                             }
                         }
-                        if (iscorrectformat == false)
+                        catch
                         {
-                            return View(propertySlider);
+
                         }
-                        if (propertySlider.UploadedFile != null)
-                        {
-                            string uploadsFolder = Path.Combine(_env.WebRootPath, "Images");
-                            uniqueName = Guid.NewGuid().ToString() + "_" + propertySlider.UploadedFile.FileName;
-                            filePath = Path.Combine(uploadsFolder, uniqueName);
-                            propertySlider.UploadedFile.CopyTo(new FileStream(filePath, FileMode.Create));
-                            propertySlider.ImageName = uniqueName;
-                        }
-                    }
-                    catch
-                    {
 
                     }
                     _context.Update(propertySlider);

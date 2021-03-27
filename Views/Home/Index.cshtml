@@ -3,7 +3,7 @@
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/HomeGeneral/Index.cshtml";
 }
-}
+
 
 <!--==========Start Slides Area==========-->
 <section id="home_slides" class="home_slides">
@@ -35,7 +35,7 @@
                             </a>
                     </div>
                 </div>
-            }
+             }
 
         </div>
     </div>
@@ -145,7 +145,7 @@
                 </div>
                 <div class="panel panel-default wow fadeInLeft delay-07s">
                     <div class="panel-body">
-                        <form asp-action="LargeFilter">
+                        <form asp-action="LargeFilter" asp-controller="Home">
                             <div class="col-xs-12 col-sm-12 col-md-4">
                                 <div class="form-group mt15">
                                     <input asp-for="Keyword" class="form-control input-lg" placeholder="Keyword" type="text">
@@ -1382,7 +1382,7 @@
             </div>
             <div class="col-md-4 col-sm-4">
                 <div class="counter-item">
-                    <div class="count-value" data-count="@forrent;">
+                    <div class="count-value" data-count="@forrent">
                         <span class="fa fa-tags">
                         </span>
                         <span class="start-count">
@@ -1404,7 +1404,7 @@
                         </span>
                     </div>
                     <p>
-                        Agents
+                       Active  Agents &amp; Landlords
                     </p>
                 </div>
             </div>
@@ -1413,7 +1413,7 @@
 </div>
 <div class="clearfix">
 </div>
-<
+
 <!--=======================================
 =            Section Testimoni            =
 ========================================-->
@@ -1452,7 +1452,7 @@
                                     <div class="sngle-tsmt">
                                         <div class="client-dsc">
                                             <p>
-                                                @item.Testimony
+                                                @Html.Raw(item.Testimony)
                                             </p>
                                         </div>
                                         <img alt="" src="~/Images/@item.User.ImageName">

@@ -10,6 +10,8 @@ using EasyRent.Models;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using EasyRent.Constants;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EasyRent.Controllers
 {
@@ -29,6 +31,48 @@ namespace EasyRent.Controllers
         {
             var applicationDbContext = _context.Properties.Include(m => m.ClosedTo).Include(m => m.PropertyMode).Include(m => m.PropertyType).Include(m => m.User);
             return View(await applicationDbContext.ToListAsync());
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Show(int id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var @property = await _context.Properties.FindAsync(id);
+            if (@property == null)
+            {
+                return NotFound();
+            }
+            @property.isDisplayed = true;
+            _context.Properties.Update(@property);
+            _context.SaveChanges();
+            var applicationDbContext = _context.Properties.Include(m => m.ClosedTo).Include(m => m.PropertyMode).Include(m => m.PropertyType).Include(m => m.User);
+            return View("Index", await applicationDbContext.ToListAsync());
+        }
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UnShow(int id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var @property = await _context.Properties.FindAsync(id);
+            if (@property == null)
+            {
+                return NotFound();
+            }
+            @property.isDisplayed = false;
+            _context.Properties.Update(@property);
+            _context.SaveChanges();
+            var applicationDbContext = _context.Properties.Include(m => m.ClosedTo).Include(m => m.PropertyMode).Include(m => m.PropertyType).Include(m => m.User);
+            return View("Index", await applicationDbContext.ToListAsync());
         }
 
         // GET: Properties/Details/5
@@ -70,6 +114,14 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Address,GoogleMapAddress,ImageName,Price,Description,Area,BedRooms,bathrooms,Garage,Stairs,BuildingConditon,FloorPlanImage,isDealClosed,isDisplayed,Country,CurrencyId,PropertyTypeId,PropertyModeId,UserId,VideoLink,ClosedToId,UploadedFile")] Property @property)
         {
+
+            if (!User.IsInRole("Admin"))
+            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                @property.UserId = userId;
+                @property.isDisplayed = false;
+                @property.ImageName = "not available";
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -144,6 +196,13 @@ namespace EasyRent.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,GoogleMapAddress,ImageName,Price,Description,Area,BedRooms,bathrooms,Garage,Stairs,BuildingConditon,FloorPlanImage,isDealClosed,isDisplayed,Country,CurrencyId,PropertyTypeId,PropertyModeId,UserId,VideoLink,ClosedToId,UploadedFile")] Property @property)
         {
+            if (!User.IsInRole("Admin"))
+            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                @property.UserId = userId;
+                @property.isDisplayed = false;
+                @property.ImageName = "not available";
+            }
             if (id != @property.Id)
             {
                 return NotFound();
@@ -154,42 +213,44 @@ namespace EasyRent.Controllers
                 try
                 {
 
-                    try
+                    if (@property.UploadedFile != null)
                     {
-
-                        var iscorrectformat = false;
-                        string uniqueName = null;
-                        string filePath = null;
-                        FileInfo fi = new FileInfo(@property.UploadedFile.FileName);
-
-                        var actualextension = fi.Extension;
-                        var imageextensions = FileFormat.GetSupportedImageTypeExtensionsList();
-                        foreach (var imageExtension in imageextensions)
+                        try
                         {
-                            if (imageExtension == actualextension)
+
+                            var iscorrectformat = false;
+                            string uniqueName = null;
+                            string filePath = null;
+                            FileInfo fi = new FileInfo(@property.UploadedFile.FileName);
+
+                            var actualextension = fi.Extension;
+                            var imageextensions = FileFormat.GetSupportedImageTypeExtensionsList();
+                            foreach (var imageExtension in imageextensions)
                             {
-                                iscorrectformat = true;
+                                if (imageExtension == actualextension)
+                                {
+                                    iscorrectformat = true;
+                                }
+                            }
+                            if (iscorrectformat == false)
+                            {
+                                return View(@property);
+                            }
+
+                            if (@property.UploadedFile != null)
+                            {
+                                string uploadsFolder = Path.Combine(_env.WebRootPath, "Images");
+                                uniqueName = Guid.NewGuid().ToString() + "_" + @property.UploadedFile.FileName;
+                                filePath = Path.Combine(uploadsFolder, uniqueName);
+                                @property.UploadedFile.CopyTo(new FileStream(filePath, FileMode.Create));
+                                @property.ImageName = uniqueName;
                             }
                         }
-                        if (iscorrectformat == false)
+                        catch
                         {
-                            return View(@property);
-                        }
 
-                        if (@property.UploadedFile != null)
-                        {
-                            string uploadsFolder = Path.Combine(_env.WebRootPath, "Images");
-                            uniqueName = Guid.NewGuid().ToString() + "_" + @property.UploadedFile.FileName;
-                            filePath = Path.Combine(uploadsFolder, uniqueName);
-                            @property.UploadedFile.CopyTo(new FileStream(filePath, FileMode.Create));
-                            @property.ImageName = uniqueName;
                         }
                     }
-                    catch
-                    {
-
-                    }
-
                     _context.Update(@property);
                     await _context.SaveChangesAsync();
                 }

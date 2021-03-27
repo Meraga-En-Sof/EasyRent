@@ -1,0 +1,90 @@
+﻿@model EasyRent.ViewModels.UserHomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/HomeGeneral/Index.cshtml";
+}
+
+
+<!--==============================================
+    =            Section recent property            =
+    ===============================================-->
+<div class="bg-default wrap-recent-property pdt40 pdbt80 wow fadeInUp delay-08s">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h3>Property List</h3>
+                <div class="recent-property owl-carousel owl-theme">
+
+                    @foreach (var item in Model.RecentProperties)
+                    {
+                    <div class="item">
+                        <a href=" @Url.Action("PropertyDetail", "Home", new { Id = item.Id })">
+                            <div class="listing-item compact">
+                                <div class="listing-img-container">
+                                    <div class="listing-badges">
+                                        <span class="featured">
+                                            Featured
+                                        </span>
+                                        <span>
+                                            @item.PropertyMode.Name
+                                        </span>
+                                    </div>
+                                    <div class="listing-img-content">
+                                        <span class="listing-compact-title">
+                                            @item.Name
+                                            <i>
+
+                                                @{
+                                                        string ammount = "$" + item.Price + "  / monthly";
+                                                        if (item.PropertyModeId == 1)
+                                                        {
+                                                            ammount = "$" + item.Price;
+
+
+                                                        }
+                                                }
+
+                                                @ammount
+
+                                            </i>
+                                        </span>
+                                        <ul class="listing-hidden-content">
+                                            <li>
+                                                Area
+                                                <span>
+                                                    @item.Area sq ft
+                                                </span>
+                                            </li>
+                                            <li>
+                                                Garage
+                                                <span>
+                                                    @item.Garage
+                                                </span>
+                                            </li>
+                                            <li>
+                                                Beds
+                                                <span>
+                                                    @item.BedRooms
+                                                </span>
+                                            </li>
+                                            <li>
+                                                Baths
+                                                <span>
+                                                    @item.bathrooms
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <img alt="" src="~/Images/@item.ImageName">
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix">
+</div>

@@ -1,6 +1,7 @@
 ﻿using EasyRent.Data;
 using EasyRent.Models;
 using EasyRent.ViewModels;
+using KigooProperties.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,11 +34,11 @@ namespace EasyRent.Controllers
             {
                 SliderProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed == true && m.isDisplayed == true),
                 OurServices = db.OurServices.OrderByDescending(m => m.Id),
-              RecentProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Where(m => m.isDealClosed == false),
-              PopularProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed),
+                RecentProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Where(m => m.isDealClosed == false),
+                PopularProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed),
                 PropertyModes = db.propertyModes,
                 PropertyTypes = db.PropertyTypes,
-                Testimonials = db.Testimonials,
+                Testimonials = db.Testimonials.Include(m => m.User).Where(m => m.isApproved == true),
                 AllProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType),
                 MenuProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Take(10),
                 SocialMedia = db.SocialMedias.OrderByDescending(m => m.Id).FirstOrDefault()
@@ -46,11 +47,93 @@ namespace EasyRent.Controllers
             return View(userGeneralViewModel);
         }
 
+       
+        public IActionResult LargeFilter(UserHomeViewModel zeuserHomeViewModel)
+        {
+            QueryGenerally queryGenerally = new QueryGenerally(db);
+            GeneralQuery generalQuery = new GeneralQuery()
+            {
+                Country = zeuserHomeViewModel.Country,
+                Keyword = zeuserHomeViewModel.Keyword,
+                MaxPrice = zeuserHomeViewModel.MaxPrice,
+                MinPrice = zeuserHomeViewModel.MinPrice,
+                NumberOfBathrooms = zeuserHomeViewModel.NumberOfBathrooms,
+                NumberofBedrooms = zeuserHomeViewModel.NumberofBedrooms,
+                PropertyStatus = zeuserHomeViewModel.PropertyStatus,
+                PropertyType = zeuserHomeViewModel.PropertyType
+            };
+
+            
+
+            UserHomeViewModel userGeneralViewModel = new UserHomeViewModel()
+            {
+                SliderProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed == true && m.isDisplayed == true),
+                OurServices = db.OurServices.OrderByDescending(m => m.Id),
+                RecentProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Where(m => m.isDealClosed == false),
+                PopularProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed),
+                PropertyModes = db.propertyModes,
+                PropertyTypes = db.PropertyTypes,
+                Testimonials = db.Testimonials.Include(m => m.User).Where(m => m.isApproved == true),
+                AllProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType),
+                MenuProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Take(10),
+                SocialMedia = db.SocialMedias.OrderByDescending(m => m.Id).FirstOrDefault()
+            };
+            userGeneralViewModel.RecentProperties = queryGenerally.GetPropertieszz(generalQuery);
+            return View("PropertyList", userGeneralViewModel);
+        }
+        public IActionResult PropertyList()
+        {
+
+            UserHomeViewModel userGeneralViewModel = new UserHomeViewModel()
+            {
+                SliderProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed == true && m.isDisplayed == true),
+                OurServices = db.OurServices.OrderByDescending(m => m.Id),
+                RecentProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Where(m => m.isDealClosed == false),
+                PopularProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed),
+                PropertyModes = db.propertyModes,
+                PropertyTypes = db.PropertyTypes,
+                Testimonials = db.Testimonials.Include(m => m.User).Where(m => m.isApproved == true),
+                AllProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType),
+                MenuProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Take(10),
+                SocialMedia = db.SocialMedias.OrderByDescending(m => m.Id).FirstOrDefault()
+            };
+
+            return View(userGeneralViewModel);
+        }
+
+        public IActionResult PropertyFilter(string Id)
+        {
+
+            UserHomeViewModel userGeneralViewModel = new UserHomeViewModel()
+            {
+                SliderProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed == true && m.isDisplayed == true),
+                OurServices = db.OurServices.OrderByDescending(m => m.Id),
+                RecentProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Where(m => m.isDealClosed == false),
+                PopularProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).Where(m => m.isDealClosed),
+                PropertyModes = db.propertyModes,
+                PropertyTypes = db.PropertyTypes,
+                Testimonials = db.Testimonials.Include(m => m.User).Where(m => m.isApproved == true),
+                AllProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType),
+                MenuProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Take(10),
+                SocialMedia = db.SocialMedias.OrderByDescending(m => m.Id).FirstOrDefault()
+            };
+
+            if (!string.IsNullOrEmpty(Id))
+            {
+                userGeneralViewModel.RecentProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Where(m => m.isDealClosed == false && m.Address.Contains(Id));
+            }
+
+            return View("PropertyList", userGeneralViewModel);
+        }
+
+
+
+
         public IActionResult About()
         {
             AboutUsViewModel aboutUsViewModel = new AboutUsViewModel()
             {   AboutUs = db.AboutUs.OrderByDescending(m => m.Id).FirstOrDefault(),
-                Testimonials = db.Testimonials,
+                Testimonials = db.Testimonials.Include(m => m.User).Where(m => m.isApproved == true),
                 MenuProperties = db.Properties.Include(m => m.PropertyMode).Include(m => m.PropertyType).OrderByDescending(m => m.Id).Take(10),
                 SocialMedia = db.SocialMedias.OrderByDescending(m => m.Id).FirstOrDefault()
             };

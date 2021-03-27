@@ -5,68 +5,84 @@
     Layout = "~/Views/Shared/AdminMenu.cshtml";
 }
 
-<h2>Index</h2>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <p>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Create">Create New</a>
+                        }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.RecieptNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PaidOn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExpiryDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Property)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tenant)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LandLord)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RecieptNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaidOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpiryDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Property.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tenant.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LandLord.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                    </p>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.RecieptNumber)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PaidOn)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ExpiryDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ImageName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Property)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Tenant)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.LandLord)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RecieptNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PaidOn)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ExpiryDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ImageName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Property.Address)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Tenant.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LandLord.Id)
+                                    </td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
