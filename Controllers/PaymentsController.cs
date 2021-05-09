@@ -70,9 +70,9 @@ namespace EasyRent.Controllers
         public IActionResult Create()
         {
             ViewBag.NavigatedTO = "Payment";
-            ViewData["LandLordId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["LandLordId"] = new SelectList(_context.Users, "Id", "Email");
             ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Address");
-            ViewData["TenantId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["TenantId"] = new SelectList(_context.Users, "Id", "Email");
             return View();
 
         }
@@ -146,7 +146,8 @@ namespace EasyRent.Controllers
             {
                 payments.ExpiryDate = DateTime.UtcNow.AddYears(70);
             }
-            payments.RecieptNumber = new Guid().ToString();
+            Guid g;
+            payments.RecieptNumber = Guid.NewGuid().ToString();
             _context.Payments.Add(payments);
             _context.SaveChanges();
             
@@ -169,9 +170,9 @@ namespace EasyRent.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LandLordId"] = new SelectList(_context.Users, "Id", "Id", payments.LandLordId);
+            ViewData["LandLordId"] = new SelectList(_context.Users, "Id", "Email", payments.LandLordId);
             ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Address", payments.PropertyId);
-            ViewData["TenantId"] = new SelectList(_context.Users, "Id", "Id", payments.TenantId);
+            ViewData["TenantId"] = new SelectList(_context.Users, "Id", "Email", payments.TenantId);
             return View(payments);
         }
 
@@ -191,10 +192,33 @@ namespace EasyRent.Controllers
             {
                 return NotFound();
             }
-            ViewData["LandLordId"] = new SelectList(_context.Users, "Id", "Id", payments.LandLordId);
+            ViewData["LandLordId"] = new SelectList(_context.Users, "Id", "Email", payments.LandLordId);
             ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Address", payments.PropertyId);
-            ViewData["TenantId"] = new SelectList(_context.Users, "Id", "Id", payments.TenantId);
+            ViewData["TenantId"] = new SelectList(_context.Users, "Id", "Email", payments.TenantId);
             return View(payments);
+        }
+
+
+        [Authorize(Roles = "Admin, Agent")]
+        // GET: Payments/Edit/5
+        public async Task<IActionResult> AcceptPayment(int? id)
+        {
+            ViewBag.NavigatedTO = "Payment";
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var payments = await _context.Payments.FindAsync(id);
+            if (payments == null)
+            {
+                return NotFound();
+            }
+            var property = _context.Properties.Where(m => m.Id == payments.PropertyId).FirstOrDefault();
+            property.ClosedToId = payments.TenantId;
+            _context.Properties.Update(property);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // POST: Payments/Edit/5
@@ -230,9 +254,9 @@ namespace EasyRent.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LandLordId"] = new SelectList(_context.Users, "Id", "Id", payments.LandLordId);
+            ViewData["LandLordId"] = new SelectList(_context.Users, "Id", "Email", payments.LandLordId);
             ViewData["PropertyId"] = new SelectList(_context.Properties, "Id", "Address", payments.PropertyId);
-            ViewData["TenantId"] = new SelectList(_context.Users, "Id", "Id", payments.TenantId);
+            ViewData["TenantId"] = new SelectList(_context.Users, "Id", "Email", payments.TenantId);
             return View(payments);
         }
 

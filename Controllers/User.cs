@@ -40,11 +40,11 @@ namespace EasyRent.Controllers
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 List<EasyRent.Models.User> applicationUsers = new List<EasyRent.Models.User>();
-                var roles = db.Properties.Where(m => m.UserId == userId);
+                var roles = db.Properties.Where(m => m.ClosedToId == userId);
 
                 foreach (var item in roles)
                 {
-                    var user = db.Users.Where(m => m.Id == item.ClosedToId).FirstOrDefault();
+                    var user = db.Users.Where(m => m.Id == item.UserId).FirstOrDefault();
                     applicationUsers.Add(user);
                 }
 
@@ -76,11 +76,11 @@ namespace EasyRent.Controllers
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 List<EasyRent.Models.User> applicationUsers = new List<EasyRent.Models.User>();
-                var roles = db.Properties.Where(m => m.ClosedToId == userId);
+                var roles = db.Properties.Where(m => m.UserId == userId);
 
                 foreach (var item in roles)
                 {
-                    var user = db.Users.Where(m => m.Id == item.UserId).FirstOrDefault();
+                    var user = db.Users.Where(m => m.Id == item.ClosedToId).FirstOrDefault();
                     applicationUsers.Add(user);
                 }
 

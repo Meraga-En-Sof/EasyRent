@@ -266,9 +266,10 @@ namespace EasyRent.Controllers
             userContactUsViewModel.SocialMedia = db.SocialMedias.OrderByDescending(m => m.Id).FirstOrDefault();
             if (ModelState.IsValid)
             {
-
+                db.ContactUs.Add(userContactUsViewModel.ContactUsForm);
+                db.SaveChanges();
             }
-            return View(userContactUsViewModel);
+            return RedirectToAction("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

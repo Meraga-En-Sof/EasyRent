@@ -32,9 +32,7 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.ExpiryDate)
                                 </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.ImageName)
-                                </th>
+                               
                                 <th>
                                     @Html.DisplayNameFor(model => model.Property)
                                 </th>
@@ -60,22 +58,34 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.ExpiryDate)
                                     </td>
+                                  
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.ImageName)
+                                        @Html.DisplayFor(modelItem => item.Property.Name) at  @Html.DisplayFor(modelItem => item.Property.Address)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Property.Address)
+
+                                            @Html.DisplayFor(modelItem => item.Tenant.Email)
+
+                                        
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Tenant.Id)
+                                       
+                                            @Html.DisplayFor(modelItem => item.LandLord.Email)
+
+                                        
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.LandLord.Id)
-                                    </td>
-                                    <td>
-                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                        @if (!User.IsInRole("Tenant"))
+                                        {
+                                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                                        }
+
                                         <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                                           @if (!User.IsInRole("Tenant"))
+                                           {
+                                                <a asp-action="AcceptPayment" asp-route-id="@item.Id">Accept Payment</a>
+                                           }
                                     </td>
                                 </tr>
                             }

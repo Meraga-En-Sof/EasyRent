@@ -186,10 +186,11 @@ namespace EasyRent.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClosedToId"] = new SelectList(_context.Users, "Id", "Id", @property.ClosedToId);
+            ViewData["ClosedToId"] = new SelectList(_context.Users, "Id", "UserName", @property.ClosedToId);
             ViewData["PropertyModeId"] = new SelectList(_context.propertyModes, "Id", "Name", @property.PropertyModeId);
             ViewData["PropertyTypeId"] = new SelectList(_context.PropertyTypes, "Id", "Name", @property.PropertyTypeId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", @property.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", @property.UserId);
+            ViewBag.User = _context.Users.Where(m => m.Id == property.UserId).Select(m => m.UserName).FirstOrDefault();
             return View(@property);
         }
 

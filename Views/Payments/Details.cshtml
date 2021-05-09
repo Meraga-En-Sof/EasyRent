@@ -10,7 +10,14 @@
 <div>
     <h4>Payments</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal
+
+         <dt>
+            @Html.DisplayNameFor(model => model.ImageName)
+        </dt>
+        <dd>
+            <img src="@Model.ImageName" />
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.RecieptNumber)
         </dt>
@@ -29,12 +36,7 @@
         <dd>
             @Html.DisplayFor(model => model.ExpiryDate)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ImageName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ImageName)
-        </dd>
+       
         <dt>
             @Html.DisplayNameFor(model => model.Property)
         </dt>
