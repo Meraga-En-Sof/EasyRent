@@ -1,0 +1,30 @@
+-------------------- Auto-Git Log --------------------
+		Sun May 09 2021 07:43:23 GMT+0100 (West Africa Standard Time)
+------------------------------------------------------
+
+Modified files:
+* Controllers/HomeController.cs
+* Controllers/PaymentsController.cs
+* Controllers/PropertiesController.cs
+* Controllers/User.cs
+* Views/Home/Gallery.cshtml
+* Views/Home/Index.cshtml
+* Views/Home/PropertyDetail.cshtml
+* Views/Payments/Details.cshtml
+* Views/Payments/Index.cshtml
+* Views/Properties/Create.cshtml
+* Views/Properties/Edit.cshtml
+* Views/Properties/Index.cshtml
+* Views/User/Landlords.cshtml
+* Views/User/Tenants.cshtml
+* appsettings.json
+
+
+Created files:
+* .autogit/autogit.json
+
+
+Deleted files:
+
+
+Renamed files:
